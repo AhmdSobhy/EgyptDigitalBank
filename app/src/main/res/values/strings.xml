@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">EDB</string>
+    <string name="my_account_textview">My Accounts</string>
+</resources>
