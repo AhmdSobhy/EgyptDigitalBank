@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "975357906079",
+    "project_id": "banksystem-f5bed",
+    "storage_bucket": "banksystem-f5bed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975357906079:android:47f17543e141e07445e6aa",
+        "android_client_info": {
+          "package_name": "com.example.edb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975357906079-8ma587ep26anflb2lou42vco9f4ghmlu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.edb",
+            "certificate_hash": "c9933418285f70b6e28eda5750aa7939471a36ab"
+          }
+        },
+        {
+          "client_id": "975357906079-hreds8cbedts9nal981s9ne3k5lrvid4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXyIErva8D2E6pEW2fjU4Zjq2f9mQuIJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975357906079-hreds8cbedts9nal981s9ne3k5lrvid4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
