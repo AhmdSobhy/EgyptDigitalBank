@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.EDB" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/royal_blue</item>
+        <item name="colorPrimary">@color/navy</item>
         <item name="colorPrimaryVariant">@color/main_background</item>
         <item name="colorOnPrimary">@color/navy</item>
         <!-- Secondary brand color. -->

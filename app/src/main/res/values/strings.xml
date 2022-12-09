@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">EDB</string>
     <string name="my_account_textview">My Accounts</string>
+    <string name="transfer_money_btn_txt">Transfer\nMoney</string>
+    <string name="withdraw_btn_txt">Cash\nWithdraw</string>
+    <string name="custom_btn_txt_size">15dp</string>
+    <string name="pay_credit_btn_txt">Pay\nCredit Card</string>
+    <string name="pay_btn_txt">Pay\nYour Bills</string>
 </resources>
