@@ -6,4 +6,17 @@
     <string name="custom_btn_txt_size">15dp</string>
     <string name="pay_credit_btn_txt">Pay\nCredit Card</string>
     <string name="pay_btn_txt">Pay\nYour Bills</string>
+    <string name="create_new_acc_txt">Create New Account</string>
+    <string name="full_name_txt">Full Name</string>
+    <string name="address_txt">Address</string>
+    <string name="mobile_number_txt">Mobile Number</string>
+    <string name="mobile_num_format">01X XXX XXX XXXX</string>
+    <string name="national_id_txt">National ID</string>
+    <string name="id_format">3xxxxxxxxxxxxx</string>
+    <string name="password_txt">Password</string>
+    <string name="re_enter_password_txt">Re-enter Password</string>
+    <string name="create_account_txt">Create Account</string>
+    <string name="pass_example">ex: Edb@1234</string>
+    <string name="email_txt">Email Address</string>
+    <string name="email_format">example@gmail.com</string>
 </resources>
