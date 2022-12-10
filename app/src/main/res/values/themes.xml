@@ -16,4 +16,5 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textColor">@color/navy</item>
     </style>
+
 </resources>
