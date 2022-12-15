@@ -67,8 +67,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Call<User> call, @NonNull Response<User> response) {
                         if(response.code()== 200){
                             Toast.makeText(LoginActivity.this, "You have log in successfully ::)", Toast.LENGTH_LONG).show();
-                            User user=response.body();
+                            User user = response.body();
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            i.putExtra("user",user);
                             startActivity(i);
                         }
                         else{
