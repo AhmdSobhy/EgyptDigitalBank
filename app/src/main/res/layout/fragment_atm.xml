@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="90dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/border_navy"
+        tools:context=".ATMFragment">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Virtual ATM"
+            android:paddingTop="25dp"
+            android:textSize="30dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="23dp"
+            android:background="@drawable/border_navy"
+            android:layout_margin="20dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Deposit"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="17dp"
+                android:textColor="@color/navy"
+                android:drawableLeft="@drawable/ic_deposit"
+                android:backgroundTint="@color/white"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Withdraw"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="17dp"
+                android:drawableLeft="@drawable/ic_withdraw_48"
+                android:backgroundTint="@color/white"/>
+        </LinearLayout>
+
+    <ImageView
+        android:layout_width="170dp"
+        android:layout_height="140dp"
+        android:src="@drawable/ic_atm_withdraw" />
+
+</LinearLayout>

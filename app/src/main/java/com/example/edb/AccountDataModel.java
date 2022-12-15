@@ -1,11 +1,11 @@
 package com.example.edb;
 
-public class DataModel {
+public class AccountDataModel {
 
     String accountNumber;
     double balance;
 
-    public DataModel(String accountNumber, double balance) {
+    public AccountDataModel(String accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
     }

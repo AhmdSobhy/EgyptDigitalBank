@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="60dp"
     android:background="@drawable/top_round_corners_color"
     android:outlineSpotShadowColor="@color/lavender"
     android:outlineAmbientShadowColor="@color/lavender">
@@ -44,6 +45,7 @@
         app:layout_constraintTop_toTopOf="@id/quick_lbl">
 
         <LinearLayout
+            android:id="@+id/transfer_money_btn"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:layout_margin="5dp"
@@ -103,6 +105,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/pay_btn"
             android:layout_width="158dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
@@ -161,6 +164,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/pay_credit_btn"
             android:layout_width="158dp"
             android:layout_height="150dp"
             android:layout_margin="5dp"
@@ -220,6 +224,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/atm_btn"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
             android:layout_margin="5dp"
@@ -259,7 +264,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:padding="10dp"
-                            android:src="@drawable/ic_money_transfer_100"
+                            android:src="@drawable/ic_atm_96"
                             app:tint="@color/navy" />
 
                     </RelativeLayout>
@@ -268,8 +273,10 @@
                         android:id="@+id/withdraw_btn_txt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="17dp"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="17dp"
+                        android:layout_marginEnd="17dp"
+                        android:layout_marginBottom="17dp"
                         android:gravity="bottom"
                         android:text="@string/withdraw_btn_txt"
                         android:textColor="@color/navy"
@@ -277,82 +284,6 @@
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
-        <!--       <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:backgroundTint="@color/white"
-            android:gravity="start"
-            android:paddingHorizontal="17dp"
-            android:paddingVertical="28dp"
-            android:text="@string/transfer_money_btn_txt"
-            android:textAllCaps="false"
-            android:textColor="@color/navy"
-            android:textSize="15dp"
-            app:iconPadding="21dp"
-            app:icon="@drawable/ic_transfer_96"
-            app:iconGravity="end"
-            app:iconSize="25dp"
-            app:iconTint="@color/navy" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:backgroundTint="@color/white"
-            android:gravity="bottom"
-            android:paddingHorizontal="17dp"
-            android:paddingVertical="28dp"
-            android:text="Pay\nCredit Card"
-            android:textAllCaps="false"
-            android:textColor="@color/navy"
-            android:textSize="12dp"
-            app:icon="@drawable/ic_mastercard_credit_card_100"
-            app:iconGravity="textTop"
-            app:iconSize="25dp"
-            app:iconPadding="21dp"
-            app:iconTint="@color/navy" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-6dp"
-            android:backgroundTint="@color/white"
-            android:gravity="start"
-            android:paddingHorizontal="17dp"
-            android:paddingVertical="28dp"
-            android:text="@string/transfer_money_btn_txt"
-            android:textAllCaps="false"
-            android:textColor="@color/navy"
-            android:textSize="15dp"
-            app:iconPadding="21dp"
-            app:icon="@drawable/ic_transfer_96"
-            app:iconGravity="end"
-            app:iconSize="25dp"
-            app:iconTint="@color/navy" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-6dp"
-            android:backgroundTint="@color/white"
-            android:gravity="start"
-            android:paddingHorizontal="17dp"
-            android:paddingVertical="28dp"
-            android:text="@string/transfer_money_btn_txt"
-            android:textAllCaps="false"
-            android:textColor="@color/navy"
-            android:textSize="15dp"
-            app:iconPadding="21dp"
-            app:icon="@drawable/ic_transfer_96"
-            app:iconGravity="end"
-            app:iconSize="25dp"
-            app:iconTint="@color/navy" />-->
-
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,5 +16,7 @@
     <color name="light_lavender">#EAEDF5</color>
     <color name="main_background">#F3F5FA</color>
     <color name="transparent">#00000000</color>
+    <color name="blue">#1a4b82</color>
+    <color name="dark_blue">#3e4152</color>
 
 </resources>

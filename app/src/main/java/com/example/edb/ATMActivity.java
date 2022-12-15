@@ -1,36 +1,20 @@
 package com.example.edb;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.ArrayList;
-
-public class MainActivity extends AppCompatActivity {
-
+public class ATMActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_atm);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new HomeFragment()).commit();
-
-        //Bottom Nav Bar---------------------------------------------------------------------------
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
@@ -46,12 +30,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.menu_transfer:
                     startActivity(new Intent(getApplicationContext(), TransferActivity.class));
                     overridePendingTransition(0,0);
+                    finish();
                 case R.id.menu_profile:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack("HomeFragment").commit();
                     return true;
             }
             return true;
         });
-
     }
 }

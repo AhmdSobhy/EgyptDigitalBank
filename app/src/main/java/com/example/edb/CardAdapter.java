@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> {
 
-private final ArrayList <DataModel> dataSet;
+private final ArrayList <AccountDataModel> dataSet;
 
 public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -31,7 +31,7 @@ public static class MyViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
-    public CardAdapter(ArrayList<DataModel> data) {
+    public CardAdapter(ArrayList<AccountDataModel> data) {
         this.dataSet = data;
     }
 
@@ -39,7 +39,7 @@ public static class MyViewHolder extends RecyclerView.ViewHolder {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.account_card, parent, false);
-        view.setOnClickListener(MainActivity.myOnClickListener);
+        view.setOnClickListener(HomeFragment.myOnClickListener);
 
         return new MyViewHolder(view);
     }
