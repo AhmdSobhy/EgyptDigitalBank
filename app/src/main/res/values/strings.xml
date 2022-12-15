@@ -20,12 +20,16 @@
     <string name="email_txt">Email Address</string>
     <string name="email_format">example@gmail.com</string>
     <string name="login_txt">Login</string>
+    <string name="login_to_acc_txt">Login to Your Account</string>
     <string name="transfer_txt">Transfer</string>
     <string name="from_acc_txt">From Account</string>
     <string name="to_acc_txt">To Account</string>
     <string name="transfer_money_txt">Transfer Money</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="settings_txt">Settings</string>
     <string name="currency_egp">EGP</string>
+    <string name="account_type_txt">Account Type</string>
+    <string name="not_have_an_account_txt">Don\'t have an Account</string>
+    <string name="thank_you_for_your_trust">Thank you for your trust</string>
+    <string name="trademark_txt">EDB® 2022</string>
 </resources>

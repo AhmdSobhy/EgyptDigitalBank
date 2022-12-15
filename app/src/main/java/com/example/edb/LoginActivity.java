@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText emailTxt = findViewById(R.id.email_txt);
         EditText passwordTxt = findViewById(R.id.password_txt);
         Button LoginBtn = findViewById(R.id.login_acc_btn);
+        Button createAccountBtn = findViewById(R.id.login_create_acc_btn);
 
         LoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        createAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, CreateAccountActivity.class);
+                startActivity(i);
             }
         });
     }
