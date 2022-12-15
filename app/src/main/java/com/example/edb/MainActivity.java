@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.edb.Model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        User user = (User) getIntent().getSerializableExtra("user");
+        getIntent().putExtra("user",user);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new HomeFragment()).commit();
 
         //Bottom Nav Bar---------------------------------------------------------------------------
