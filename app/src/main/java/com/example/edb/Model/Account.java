@@ -3,9 +3,10 @@ package com.example.edb.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Account {
+public class Account implements Serializable {
     @SerializedName("Type")
     @Expose
     private String Type;
@@ -33,6 +34,11 @@ public class Account {
     @SerializedName("_id")
     @Expose
     private String _id;
+
+    public Account(String id, float balance) {
+        this._id = id;
+        this.Balance = balance;
+    }
 
 
     // Getter Methods

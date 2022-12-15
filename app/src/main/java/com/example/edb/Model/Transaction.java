@@ -3,7 +3,9 @@ package com.example.edb.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Transaction {
+import java.io.Serializable;
+
+public class Transaction implements Serializable {
     @SerializedName("Type")
     @Expose
     private String Type;
