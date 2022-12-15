@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class CreateAccountActivity extends AppCompatActivity {
+
+    ArrayAdapter<String> adapterItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         EditText passwordTxt = findViewById(R.id.password_txt);
         EditText rePasswordTxt = findViewById(R.id.re_password_txt);
         Button createAccBtn = findViewById(R.id.create_acc_btn);
+        AutoCompleteTextView accountType = findViewById(R.id.acc_type_txt);
+
+        String items[] = {"Saving", "Current"};
+
+        adapterItems = new ArrayAdapter<String>(this,R.layout.list_item,items);
+        accountType.setAdapter(adapterItems);
 
         createAccBtn.setOnClickListener(new View.OnClickListener() {
             @Override

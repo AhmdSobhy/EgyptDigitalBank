@@ -163,6 +163,29 @@
                 android:paddingVertical="10dp" />
 
             <TextView
+                android:id="@+id/acc_type_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account_type_txt" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/list_item"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:layout_marginBottom="10dp"
+                app:startIconDrawable="@drawable/ic_rings_96">
+
+                <AutoCompleteTextView
+                    android:id="@+id/acc_type_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
                 android:id="@+id/password_lbl"
                 android:layout_width="78dp"
                 android:layout_height="wrap_content"
