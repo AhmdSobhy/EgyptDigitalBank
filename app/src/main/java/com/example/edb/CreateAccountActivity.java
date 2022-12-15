@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    ArrayAdapter<String> adapterItems;
+    ArrayAdapter<String> accountTypes,genderTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +27,18 @@ public class CreateAccountActivity extends AppCompatActivity {
         EditText passwordTxt = findViewById(R.id.password_txt);
         EditText rePasswordTxt = findViewById(R.id.re_password_txt);
         Button createAccBtn = findViewById(R.id.create_acc_btn);
+        AutoCompleteTextView genderType = findViewById(R.id.gender_txt);
         AutoCompleteTextView accountType = findViewById(R.id.acc_type_txt);
 
-        String items[] = {"Saving", "Current"};
+        String[] gender = {"Male", "Female"};
+        String[] items = {"Saving", "Current"};
 
-        adapterItems = new ArrayAdapter<String>(this,R.layout.list_item,items);
-        accountType.setAdapter(adapterItems);
+        genderTypes = new ArrayAdapter<String>(this,R.layout.list_item,gender);
+        accountType.setAdapter(genderTypes);
+
+
+        accountTypes = new ArrayAdapter<String>(this,R.layout.list_item,items);
+        accountType.setAdapter(accountTypes);
 
         createAccBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +47,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
 
     }
 }
