@@ -76,7 +76,7 @@
                 android:drawableStart="@drawable/icon_email"
                 android:drawablePadding="5dp"
                 android:ems="10"
-                android:inputType="number"
+                android:inputType="text"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="10dp" />
 
