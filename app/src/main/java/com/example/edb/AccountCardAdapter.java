@@ -9,11 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.edb.Model.Account;
+
 import java.util.ArrayList;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> {
+public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.MyViewHolder> {
 
-private final ArrayList <AccountDataModel> dataSet;
+private final ArrayList <Account> dataSet;
 
 public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -31,7 +33,7 @@ public static class MyViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
-    public CardAdapter(ArrayList<AccountDataModel> data) {
+    public AccountCardAdapter(ArrayList<Account> data) {
         this.dataSet = data;
     }
 
@@ -50,7 +52,7 @@ public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView accountNumText = holder.accountNumText;
         TextView balanceText = holder.balanceText;
         ImageView accountIcon = holder.accountIcon;
-        accountNumText.setText(dataSet.get(listPosition).getAccountNumber());
+        accountNumText.setText(dataSet.get(listPosition).get_id());
         balanceText.setText(String.valueOf(dataSet.get(listPosition).getBalance()));
         accountIcon.setImageResource(R.drawable.ic_mastercard_logo_192);
     }
