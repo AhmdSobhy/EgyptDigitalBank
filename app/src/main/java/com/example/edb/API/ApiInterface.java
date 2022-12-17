@@ -12,6 +12,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -38,5 +39,8 @@ public interface ApiInterface {
 
     @POST("add-account/{userSSN}")
     Call<User> createAccount(@Path("userSSN") String userSSN, @Body Account account) ;
+
+    @GET("/isValid/AccountNo/{accountID}")
+    Call<Void> isExistAccountId(@Path("accountID") String accountID);
 
 }
