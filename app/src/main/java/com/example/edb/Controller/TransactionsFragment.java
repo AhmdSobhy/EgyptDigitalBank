@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.edb.CardsData;
 import com.example.edb.R;
 
 import java.util.ArrayList;
