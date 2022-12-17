@@ -6,7 +6,10 @@ import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -22,7 +25,7 @@ public interface ApiInterface {
     @POST("add-transaction")
     Call<User> addTransaction(@Body User user);
 
-    @POST("update-balance")
-    Call<User> updateBalance(@Body User user);
+    @PATCH("update-balance/{userSSN}/{accountId}")
+    Call<Void> updateBalance(@Path("userSSN") String userSSN, @Path("accountId")String accountId, @Body HashMap<String,String>map);
 
 }
