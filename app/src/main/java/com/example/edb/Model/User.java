@@ -35,6 +35,10 @@ public class User implements Serializable {
     @Expose
     private String PhoneNumber;
 
+    @SerializedName("Address")
+    @Expose
+    private String Address;
+
     @SerializedName("Accounts")
     @Expose
      ArrayList< Account > Accounts = new ArrayList < Account> ();
@@ -42,14 +46,14 @@ public class User implements Serializable {
     public ArrayList<Account> getAccounts() {
         return Accounts;
     }
-    public User(String SSN, String FullName,String Email, String Password, String Gender,String PhoneNumber)
-    {
+    public User(String SSN, String FullName,String Email, String Password, String Gender,String PhoneNumber, String Address) {
         this.SSN = SSN;
         this.Email = Email;
         this.Password = Password;
         this.FullName = FullName;
         this.Gender = Gender;
         this.PhoneNumber = PhoneNumber;
+        this.Address=Address;
     }
 
     public User(String ssn, Account account)
