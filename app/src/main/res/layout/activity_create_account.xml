@@ -161,7 +161,7 @@
                 android:drawablePadding="5dp"
                 android:ems="10"
                 android:hint="@string/email_format"
-                android:inputType="number"
+                android:inputType="text"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="10dp" />
 
