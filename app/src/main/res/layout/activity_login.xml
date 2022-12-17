@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/login_layout"
     tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -49,7 +50,8 @@
             android:layout_height="45dp"
             android:layout_marginStart="-3dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_edb_logo_small" />
+            android:src="@drawable/ic_edb_logo_small"
+            android:contentDescription="@string/edb_name" />
 
         <TextView
             android:id="@+id/login_acc"
@@ -76,7 +78,7 @@
             android:drawableStart="@drawable/icon_email"
             android:drawablePadding="5dp"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:paddingHorizontal="6dp"
             android:paddingVertical="10dp" />
 
@@ -118,6 +120,7 @@
                 android:textColor="@color/white" />
 
             <ImageButton
+                android:id="@+id/fingerprint_btn"
                 android:layout_width="52dp"
                 android:layout_height="49dp"
                 android:layout_marginStart="4dp"
@@ -126,7 +129,8 @@
                 android:backgroundTint="@color/navy"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_fingerprint" />
+                android:src="@drawable/ic_fingerprint"
+                android:contentDescription="@string/biometric_login_txt" />
 
         </LinearLayout>
 

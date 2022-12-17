@@ -105,7 +105,8 @@
                 android:id="@+id/gender_lbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/account_type_txt" />
+                android:text="@string/gender_txt"
+                android:layout_marginTop="10dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
