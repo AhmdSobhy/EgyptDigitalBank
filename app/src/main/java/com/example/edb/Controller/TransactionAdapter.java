@@ -1,13 +1,14 @@
-package com.example.edb;
+package com.example.edb.Controller;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.edb.R;
 
 import java.util.ArrayList;
 

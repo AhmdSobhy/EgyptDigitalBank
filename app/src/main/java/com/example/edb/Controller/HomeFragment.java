@@ -1,4 +1,4 @@
-package com.example.edb;
+package com.example.edb.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.example.edb.Model.Account;
 import com.example.edb.Model.User;
+import com.example.edb.R;
 
 import java.util.ArrayList;
 

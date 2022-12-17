@@ -1,4 +1,4 @@
-package com.example.edb;
+package com.example.edb.Controller;
 
 public class TransactionDataModel {
 

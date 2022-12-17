@@ -1,4 +1,4 @@
-package com.example.edb;
+package com.example.edb.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.edb.API.ApiInterface;
 import com.example.edb.Model.Account;
 import com.example.edb.Model.User;
+import com.example.edb.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

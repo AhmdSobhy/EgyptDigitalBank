@@ -1,4 +1,4 @@
-package com.example.edb;
+package com.example.edb.Controller;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.edb.Model.Account;
+import com.example.edb.R;
 
 import java.util.ArrayList;
 
