@@ -1,5 +1,6 @@
 package com.example.edb.API;
 
+import com.example.edb.Model.Account;
 import com.example.edb.Model.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -23,4 +24,16 @@ public interface ApiInterface {
     
     @POST("login")
     Call<User> getUserInfo(@Body HashMap<String,String>map);
+
+    @POST("add-user")
+    Call<User> createUser(@Body User user);
+
+    @POST("add-account")
+    Call<User> createAccount(@Body User user);
+
+    @POST("add-account/{userSSN}")
+     Call<User> createAccount2(@Body Account account,@Path("userSSN") String userSSN) ;
+
+
+
 }

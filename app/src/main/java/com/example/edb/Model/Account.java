@@ -35,9 +35,20 @@ public class Account implements Serializable {
     @Expose
     private String _id;
 
+    //Constructors
     public Account(String id, float balance) {
         this._id = id;
         this.Balance = balance;
+    }
+
+
+    public Account(String Type,float Balance,String Currency, String Status,String DateOfCreation)
+    {
+        this.Type = Type;
+        this.Balance = Balance;
+        this.Currency = Currency;
+        this.Status = Status;
+        this.DateOfCreation = DateOfCreation;
     }
 
 

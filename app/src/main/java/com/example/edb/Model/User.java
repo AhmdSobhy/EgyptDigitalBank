@@ -31,14 +31,32 @@ public class User implements Serializable {
     @Expose
     private String Gender;
 
+    @SerializedName("PhoneNumber")
+    @Expose
+    private String PhoneNumber;
+
     @SerializedName("Accounts")
     @Expose
-    ArrayList< Account > Accounts = new ArrayList < Account > ();
+     ArrayList< Account > Accounts = new ArrayList < Account> ();
 
     public ArrayList<Account> getAccounts() {
         return Accounts;
     }
+    public User(String SSN, String FullName,String Email, String Password, String Gender,String PhoneNumber)
+    {
+        this.SSN = SSN;
+        this.Email = Email;
+        this.Password = Password;
+        this.FullName = FullName;
+        this.Gender = Gender;
+        this.PhoneNumber = PhoneNumber;
+    }
 
+    public User(String ssn, Account account)
+    {
+        this.SSN = ssn;
+        Accounts.add(account);
+    }
     public User(String ssn){
         this.SSN=ssn;
     }
