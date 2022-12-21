@@ -59,7 +59,7 @@ public static class MyViewHolder extends RecyclerView.ViewHolder {
         transactionDateText.setText(dataSet.get(listPosition).getTransactionDate());
         transactionIDText.setText(dataSet.get(listPosition).getTransactionID());
         transactionNameText.setText(dataSet.get(listPosition).getTransactionName());
-        transactionAmountText.setText(dataSet.get(listPosition).getAmount());
+        transactionAmountText.setText(dataSet.get(listPosition).getAmount().toString());
         transactionTypeText.setText(dataSet.get(listPosition).getTransactionType());
     }
 

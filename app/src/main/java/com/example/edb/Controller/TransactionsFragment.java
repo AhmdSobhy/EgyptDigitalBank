@@ -46,6 +46,12 @@ public class TransactionsFragment extends Fragment {
 
         //user transaction
         ArrayList<Transaction> userTransaction = UserMapping.user.getAccounts().get(0).getTransactions();
+        String date = userTransaction.get(0).getDate();
+        String id = userTransaction.get(0).get_id();
+        String type = userTransaction.get(0).getType();
+        Float amount = userTransaction.get(0).getAmount();
+        String name = userTransaction.get(0).getDescription();
+        TransactionDataModel transactionDataModel = new TransactionDataModel(date,type,amount.toString(),id,name);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
