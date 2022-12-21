@@ -1,7 +1,9 @@
 package com.example.edb.Controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,11 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.edb.API.ApiInterface;
 import com.example.edb.CardsData;
+import com.example.edb.Model.Transaction;
+import com.example.edb.Model.User;
 import com.example.edb.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TransactionsFragment extends Fragment {
 
@@ -28,6 +43,9 @@ public class TransactionsFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.transaction_view);
         recyclerView.setHasFixedSize(true);
+
+        //user transaction
+        ArrayList<Transaction> userTransaction = UserMapping.user.getAccounts().get(0).getTransactions();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

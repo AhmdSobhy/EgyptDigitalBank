@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginFromAPI(String email, String password) {
-        String cloudDbUrl = "https://bank-db-api.herokuapp.com/";
+        String cloudDbUrl = "http://192.168.1.14:3000/";
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Toast.makeText(LoginActivity.this, "You have log in successfully ::)", Toast.LENGTH_LONG).show();
                     User user = response.body();
+                    UserMapping.user = user;
                     sharedPreferences.edit().putString("email", user.getEmail()).commit();
                     sharedPreferences.edit().putString("password", user.getPassword()).commit();
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
