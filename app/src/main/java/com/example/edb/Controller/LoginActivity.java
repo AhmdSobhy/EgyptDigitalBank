@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginFromAPI(String email, String password) {
-        String cloudDbUrl = "https://bank-db-api.herokuapp.com/";
+        String cloudDbUrl = "http://10.0.2.2:3000";
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);

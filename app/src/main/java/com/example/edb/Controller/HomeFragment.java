@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         System.out.println("==============================================================");
-        System.out.println(user.getFullName());
+//        System.out.println(user.getFullName());
         System.out.println(user.getAccounts().get(0).get_id());
 
         data = new ArrayList<>();
@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), TransferActivity.class);
+                i.putExtra("user",user);
                 startActivity(i);
             }
         });
