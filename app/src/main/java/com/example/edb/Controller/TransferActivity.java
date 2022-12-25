@@ -1,4 +1,5 @@
 package com.example.edb.Controller;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,9 @@ public class TransferActivity extends AppCompatActivity {
     float newBalanceR=0;
     float newBalanceS=0;
     String Sendersid;
+    Call<Void> callUpdateSender;
+    Call<Void> callUpdateReciever;
+    volatile boolean sent = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,11 +105,56 @@ public class TransferActivity extends AppCompatActivity {
                         public void onResponse(Call<User> call, Response<User> response) {
                             if (response.code()==200)  {
                                 Receiver = response.body();
+                                Retrofit retrofitUpdateBalanceR = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
+                                ApiInterface apiUpdateBalanceR = retrofitUpdateBalanceR.create(ApiInterface.class);
+                                String RecevierID = receiverAccNum.getText().toString();
+                                HashMap<String, String> balancemapS = new HashMap<>();
+                                HashMap<String, String> balancemapR = new HashMap<>();
+                                try {
+
+                                    for (int j = 0; j < Receiver.getAccounts().size(); j++) {
+                                        if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
+                                            // add the amount to his balance
+                                            float receiverBalance = Receiver.getAccounts().get(j).getBalance();
+                                            newBalanceR = receiverBalance + Float.parseFloat(amount.getText().toString());
+                                            balancemapR.put("Balance", String.valueOf(newBalanceR));
+                                            System.out.println("here here!!!!!!!!!" + RecevierID);
+                                            // we make a new call for receiver's balance
+                                            callUpdateReciever = apiUpdateBalanceR.updateBalance(Receiver.getSSN(), RecevierID, balancemapR);
+                                            callUpdateReciever.enqueue(new Callback<Void>() {
+                                                @Override
+                                                public void onResponse(Call<Void> call, @NonNull  Response<Void> response) {
+                                                    if (response.code() == 200) {
+
+                                                        System.out.println("Receiver's new balance " + balancemapR.get("Balance"));
+                                                        Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
+                                                        Intent i = new Intent(TransferActivity.this, TransferActivity.class);
+
+                                                        i.putExtra("user",sender);
+                                                        startActivity(i);
+                                                    } else {
+                                                        System.out.println("A33333333333333333333333333333 in update receiver");
+                                                    }
+
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<Void> call, Throwable t) {
+                                                    System.out.println("Error in Update Balance Reciever Side");
+
+                                                }
+                                            });
+
+                                        }
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 // validation for balance
                                 //Call Update-balance
                                 String senderAccountID = senderAutoComplete.getText().toString();
-                                HashMap<String, String> balancemapS = new HashMap<>();
-                                HashMap<String, String> balancemapR = new HashMap<>();
+
                                 // for loop to get the index of the chosen account to get it's balance
                                 Retrofit retrofitUpdateBalance = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
                                 ApiInterface apiUpdateBalance = retrofitUpdateBalance.create(ApiInterface.class);
@@ -120,18 +169,22 @@ public class TransferActivity extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "Please Wait...", Toast.LENGTH_LONG).show();
                                             // reduce senders balance
                                             newBalanceS = senderBalance - Float.parseFloat(amount.getText().toString());
+                                            sender.getAccounts().get(i).setBalance(newBalanceS);
                                             balancemapS.put("Balance", String.valueOf(newBalanceS));
                                             //we make a call for sender and update the balance
                                             indexOfAccount = i;
-                                            Call<Void> callUpdateSender = apiUpdateBalance.updateBalance(sender.getSSN(), sender.getAccounts().get(indexOfAccount).get_id(), balancemapS);
+                                             callUpdateSender = apiUpdateBalance.updateBalance(sender.getSSN(), sender.getAccounts().get(indexOfAccount).get_id(), balancemapS);
+
 
                                             callUpdateSender.enqueue(new Callback<Void>() {
                                                 @Override
-                                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                                public void onResponse(Call<Void> call,@NonNull Response<Void> response) {
                                                     if (response.code() == 200) {
                                                         System.out.println(sender.getAccounts().get(indexOfAccount).get_id());
                                                         System.out.println("Sender's new balance " + balancemapS.get("Balance"));
                                                         Toast.makeText(getApplicationContext(), "Reduced from account...", Toast.LENGTH_LONG).show();
+
+
                                                     } else {
                                                         System.out.println("A33333333333333333333333333333 in update sender");
                                                     }
@@ -150,40 +203,6 @@ public class TransferActivity extends AppCompatActivity {
 
 
                                 //here we search for the index of account ID from receiver's side
-                                Retrofit retrofitUpdateBalanceR = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
-                                ApiInterface apiUpdateBalanceR = retrofitUpdateBalanceR.create(ApiInterface.class);
-                                String RecevierID = receiverAccNum.getText().toString();
-
-                                for (int j = 0; j < Receiver.getAccounts().size(); j++) {
-                                    if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
-                                        // add the amount to his balance
-                                        float receiverBalance = Receiver.getAccounts().get(j).getBalance();
-                                        newBalanceR = receiverBalance + Float.parseFloat(amount.getText().toString());
-                                        balancemapR.put("Balance", String.valueOf(newBalanceR));
-                                        System.out.println("here here!!!!!!!!!" + RecevierID);
-                                        // we make a new call for receiver's balance
-                                        Call<Void> callUpdateReciever = apiUpdateBalanceR.updateBalance(Receiver.getSSN(), RecevierID, balancemapR);
-                                        callUpdateReciever.enqueue(new Callback<Void>() {
-                                            @Override
-                                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                                if (response.code() == 200) {
-                                                    System.out.println("Receiver's new balance " + balancemapR.get("Balance"));
-                                                    Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
-                                                } else {
-                                                    System.out.println("A33333333333333333333333333333 in update receiver");
-                                                }
-
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<Void> call, Throwable t) {
-                                                System.out.println("Error in Update Balance Reciever Side");
-
-                                            }
-                                        });
-
-                                    }
-                                }
 
 
                             }
@@ -195,7 +214,7 @@ public class TransferActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
-                            System.out.println("Connection problem with fetching sender!");
+                            System.out.println("Connection problem with fetching reciever!");
 
                         }
                     });
