@@ -77,6 +77,9 @@ public class Account implements Serializable {
     public String get_id() {
         return _id;
     }
+    public ArrayList<Transaction> getTransactions() {
+        return Transactions;
+    }
 
     // Setter Methods
 
