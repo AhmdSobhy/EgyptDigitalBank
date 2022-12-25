@@ -1,5 +1,6 @@
 package com.example.edb.Controller;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,27 +15,50 @@ import java.util.ArrayList;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MyViewHolder> {
 
-private final ArrayList <TransactionDataModel> dataSet;
+    private Context mContext;
+    private final ArrayList <TransactionDataModel> dataSet;
+    private OnItemClickListener mListener;
 
-public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-    TextView transactionDateText;
-    TextView transactionTypeText;
-    TextView transactionAmountText;
-    TextView transactionIDText;
-    TextView transactionNameText;
-
-    public MyViewHolder(View itemView) {
-        super(itemView);
-        this.transactionDateText = itemView.findViewById(R.id.transaction_date_txt);
-        this.transactionTypeText = itemView.findViewById(R.id.transaction_type_txt);
-        this.transactionAmountText = itemView.findViewById(R.id.transaction_amount_txt);
-        this.transactionIDText = itemView.findViewById(R.id.transaction_id_txt);
-        this.transactionNameText = itemView.findViewById(R.id.transaction_name_txt);
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
-}
 
-    public TransactionAdapter(ArrayList<TransactionDataModel> data) {
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView transactionDateText;
+        TextView transactionTypeText;
+        TextView transactionAmountText;
+        TextView transactionIDText;
+        TextView transactionNameText;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            this.transactionDateText = itemView.findViewById(R.id.transaction_date_txt);
+            this.transactionTypeText = itemView.findViewById(R.id.transaction_type_txt);
+            this.transactionAmountText = itemView.findViewById(R.id.transaction_amount_txt);
+            this.transactionIDText = itemView.findViewById(R.id.transaction_id_txt);
+            this.transactionNameText = itemView.findViewById(R.id.transaction_name_txt);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mListener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public TransactionAdapter(Context context,ArrayList<TransactionDataModel> data) {
+        this.mContext = context;
         this.dataSet = data;
     }
 
@@ -42,25 +66,22 @@ public static class MyViewHolder extends RecyclerView.ViewHolder {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_card, parent, false);
-        view.setOnClickListener(TransactionsFragment.myOnClickListener);
-
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
+        String date = dataSet.get(listPosition).getTransactionDate();
 
-        TextView transactionDateText = holder.transactionDateText;
-        TextView transactionAmountText = holder.transactionAmountText;
-        TextView transactionTypeText = holder.transactionTypeText;
-        TextView transactionIDText = holder.transactionIDText;
-        TextView transactionNameText = holder.transactionTypeText;
+        holder.transactionDateText.setText(date.substring(5,10));
+        holder.transactionIDText.setText(dataSet.get(listPosition).getTransactionID());
+        holder.transactionNameText.setText(dataSet.get(listPosition).getTransactionName());
+        holder.transactionAmountText.setText(dataSet.get(listPosition).getAmount());
+        if (dataSet.get(listPosition).getTransactionType().equals("withdraw"))
+            holder.transactionTypeText.setText("-");
+        else
+            holder.transactionTypeText.setText("+");
 
-        transactionDateText.setText(dataSet.get(listPosition).getTransactionDate());
-        transactionIDText.setText(dataSet.get(listPosition).getTransactionID());
-        transactionNameText.setText(dataSet.get(listPosition).getTransactionName());
-        transactionAmountText.setText(dataSet.get(listPosition).getAmount().toString());
-        transactionTypeText.setText(dataSet.get(listPosition).getTransactionType());
     }
 
     @Override

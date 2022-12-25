@@ -1,9 +1,7 @@
 package com.example.edb.Controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,80 +10,100 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.example.edb.API.ApiInterface;
-import com.example.edb.CardsData;
 import com.example.edb.Model.Transaction;
-import com.example.edb.Model.User;
 import com.example.edb.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+public class TransactionsFragment extends Fragment implements TransactionAdapter.OnItemClickListener {
 
-public class TransactionsFragment extends Fragment {
-
-    private static RecyclerView.Adapter adapter;
-    private static ArrayList<TransactionDataModel> data;
-    static View.OnClickListener myOnClickListener;
+    private TransactionAdapter transactionAdapter;
+    int listPosition;
+    static int accountsIndex = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
+        TextView accId = view.findViewById(R.id.acc_num_txt);
+        TextView accBalance = view.findViewById(R.id.acc_balance_txt);
+        ImageButton nextAccountBtn = view.findViewById(R.id.next_acc_btn);
+        ImageButton previousAccountBtn = view.findViewById(R.id.previous_acc_btn);
 
-        RecyclerView recyclerView = view.findViewById(R.id.transaction_view);
-        recyclerView.setHasFixedSize(true);
-
-        //user transaction
-        ArrayList<Transaction> userTransaction = UserMapping.user.getAccounts().get(0).getTransactions();
-        for(int i=0;i<userTransaction.size();i++) {
-            String date = userTransaction.get(i).getDate();
-            String id = userTransaction.get(i).get_id();
-            String type = userTransaction.get(i).getType();
-            Float amount = userTransaction.get(i).getAmount();
-            String name = userTransaction.get(i).getDescription();
-            TransactionDataModel transactionDataModel = new TransactionDataModel(date,type,amount.toString(),id,name);
+        Bundle args = getArguments();
+        if (args != null) {
+            listPosition = args.getInt("position");
+            accountsIndex = listPosition;
+            accId.setText(UserMapping.user.getAccounts().get(listPosition).get_id());
+            accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(listPosition).getBalance()));
         }
 
+        //Transactions RecyclerView
+        RecyclerView recyclerView = view.findViewById(R.id.transaction_view);
+        recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        transactionAdapter = new TransactionAdapter(getContext(), getAccountTransactions(listPosition));
+        recyclerView.setAdapter(transactionAdapter);
+        transactionAdapter.setOnItemClickListener(TransactionsFragment.this);
 
-        data = new ArrayList<>();
-        for (int i = 0; i < CardsData.transactionArray.length; i++) {
-            data.add(new TransactionDataModel(
-                    CardsData.transactionArray[i][0],
-                    CardsData.transactionArray[i][1],
-                    CardsData.transactionArray[i][2],
-                    CardsData.transactionArray[i][3],
-                    CardsData.transactionArray[i][4]
-            ));
-        }
-
-        adapter = new TransactionAdapter(data);
-        recyclerView.setAdapter(adapter);
+        nextAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<TransactionDataModel> transactionData = getAccountTransactions(accountsIndex+1);
+                if (transactionData != null) {
+                    transactionAdapter = new TransactionAdapter(getContext(), transactionData);
+                    recyclerView.setAdapter(transactionAdapter);
+                    accountsIndex++;
+                    accId.setText(UserMapping.user.getAccounts().get(accountsIndex).get_id());
+                    accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(accountsIndex).getBalance()));
+                }
+            }
+        });
+        previousAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<TransactionDataModel> transactionData = getAccountTransactions(accountsIndex-1);
+                if (transactionData != null) {
+                    transactionAdapter = new TransactionAdapter(getContext(), transactionData);
+                    recyclerView.setAdapter(transactionAdapter);
+                    accountsIndex--;
+                    accId.setText(UserMapping.user.getAccounts().get(accountsIndex).get_id());
+                    accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(accountsIndex).getBalance()));
+                }
+            }
+        });
 
         return view;
     }
-    private class MyOnClickListener implements View.OnClickListener {
 
-        private MyOnClickListener() {
-        }
+    private ArrayList<TransactionDataModel> getAccountTransactions(int position){
+        ArrayList<TransactionDataModel> transactionData = new ArrayList<>();
+        try {
+            ArrayList<Transaction> userTransaction = UserMapping.user.getAccounts().get(position).getTransactions();
 
-        @Override
-        public void onClick(View v) {
-//            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.fragment_container,new TransactionsFragment());
-//            fragmentTransaction.addToBackStack("HomeFragment");
-//            fragmentTransaction.commit();
+            for(int i=0;i<userTransaction.size();i++) {
+                String date = userTransaction.get(i).getDate();
+                String id = userTransaction.get(i).get_id();
+                String type = userTransaction.get(i).getType();
+                float amount = userTransaction.get(i).getAmount();
+                String name = userTransaction.get(i).getDescription();
+                transactionData.add ( new TransactionDataModel(date,type, Float.toString(amount),id,name));
+            }
+
+            return transactionData;
+
+        }catch (Exception e){
+            return null;
         }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        //TODO
+        //Navigate to Transaction Details Page
     }
 }

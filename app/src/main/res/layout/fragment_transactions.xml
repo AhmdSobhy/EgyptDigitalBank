@@ -17,6 +17,7 @@
         android:layout_gravity="center_horizontal">
 
         <ImageButton
+            android:id="@+id/previous_acc_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_arrow_back_32"
@@ -72,6 +73,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/next_acc_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_arrow_forward_32"
