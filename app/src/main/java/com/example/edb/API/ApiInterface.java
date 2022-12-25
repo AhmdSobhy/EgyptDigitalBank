@@ -45,7 +45,10 @@ public interface  ApiInterface {
 
     @GET("/isValid/AccountNo/{accountID}")
     Call<Void> isExistAccountId(@Path("accountID") String accountID);
-
     @GET("add-transaction")
     Call<List<Transaction>> getTransactions(@Query("SSN") String SSN);
+    @GET("/users/Accounts/{accountID}")
+    Call<User> getUserByAccountId(@Path("accountID") String accountId);
+
+
 }
