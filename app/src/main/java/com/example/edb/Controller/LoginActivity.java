@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.edb.API.ApiInterface;
+import com.example.edb.API.ApiUrl;
 import com.example.edb.Model.User;
 import com.example.edb.R;
 
@@ -71,7 +72,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginFromAPI(String email, String password) {
-        String cloudDbUrl = "https://thirty-tools-grin-197-57-3-73.loca.lt";
+        String cloudDbUrl = ApiUrl.serverUrl;
+
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
@@ -87,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Toast.makeText(LoginActivity.this, "You have log in successfully ::)", Toast.LENGTH_LONG).show();
                     User user = response.body();
+                    UserMapping.user = user;
                     sharedPreferences.edit().putString("email", user.getEmail()).commit();
                     sharedPreferences.edit().putString("password", user.getPassword()).commit();
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
