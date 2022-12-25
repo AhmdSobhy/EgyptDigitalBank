@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.edb.API.ApiInterface;
+import com.example.edb.API.ApiUrl;
 import com.example.edb.Model.User;
 import com.example.edb.R;
 
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginFromAPI(String email, String password) {
-        String cloudDbUrl = "http://10.0.2.2:3000";
+        String cloudDbUrl = ApiUrl.serverUrl;
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
