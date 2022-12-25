@@ -91,6 +91,17 @@ public class User implements Serializable {
         return Password;
     }
 
+    public String getGender() {
+        return Gender;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
     // Setter Methods
 
     public void set_id(String _id) {

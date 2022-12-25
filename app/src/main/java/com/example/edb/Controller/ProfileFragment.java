@@ -23,6 +23,12 @@ public class ProfileFragment extends Fragment {
         EditText mobileNumTxt = view.findViewById(R.id.mobile_num_txt);
         EditText emailTxt = view.findViewById(R.id.email_txt);
         EditText nationalIDTxt = view.findViewById(R.id.id_txt);
+        //display user info
+        fullNameTxt.setText(UserMapping.user.getFullName());
+        emailTxt.setText((UserMapping.user.getEmail()));
+        nationalIDTxt.setText(UserMapping.user.getSSN());
+        mobileNumTxt.setText(UserMapping.user.getPhoneNumber());
+        addressTxt.setText(UserMapping.user.getAddress());
 
         return view;
     }
