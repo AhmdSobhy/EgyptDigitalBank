@@ -71,8 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginFromAPI(String email, String password) {
-        String cloudDbUrl = "http://10.0.2.2:3000";
-
+        String cloudDbUrl = "https://thirty-tools-grin-197-57-3-73.loca.lt";
         Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 

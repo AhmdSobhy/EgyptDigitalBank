@@ -35,4 +35,5 @@
     <string name="gender_txt">Gender</string>
     <string name="edb_name">EDB</string>
     <string name="biometric_login_txt">Biometric login</string>
+    <string name="edb_wallet_txt">EDB Wallet</string>
 </resources>
