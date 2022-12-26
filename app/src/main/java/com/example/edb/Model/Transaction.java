@@ -26,6 +26,14 @@ public class Transaction implements Serializable {
     @Expose
     private String _id;
 
+    public Transaction(String transactionDate, String transactionType, float transactionAmount, String transactionID, String transactionName) {
+        this._id = transactionID;
+        this.Amount = transactionAmount;
+        this.Date = transactionDate;
+        this.Type = transactionType;
+        this.description = transactionName;
+    }
+
     public String getType() {
         return Type;
     }

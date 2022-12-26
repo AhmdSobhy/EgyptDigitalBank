@@ -21,12 +21,13 @@ import java.util.ArrayList;
 public class TransactionsFragment extends Fragment implements TransactionAdapter.OnItemClickListener {
 
     private TransactionAdapter transactionAdapter;
-    int listPosition;
     static int accountsIndex = 0;
+    int listPosition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
+        TextView accType = view.findViewById(R.id.tr_acc_type_txt);
         TextView accId = view.findViewById(R.id.acc_num_txt);
         TextView accBalance = view.findViewById(R.id.acc_balance_txt);
         ImageButton nextAccountBtn = view.findViewById(R.id.next_acc_btn);
@@ -36,6 +37,7 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
         if (args != null) {
             listPosition = args.getInt("position");
             accountsIndex = listPosition;
+            accType.setText(UserMapping.user.getAccounts().get(listPosition).getType());
             accId.setText(UserMapping.user.getAccounts().get(listPosition).get_id());
             accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(listPosition).getBalance()));
         }
@@ -53,11 +55,12 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
         nextAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<TransactionDataModel> transactionData = getAccountTransactions(accountsIndex+1);
+                ArrayList<Transaction> transactionData = getAccountTransactions(accountsIndex+1);
                 if (transactionData != null) {
                     transactionAdapter = new TransactionAdapter(getContext(), transactionData);
                     recyclerView.setAdapter(transactionAdapter);
                     accountsIndex++;
+                    accType.setText(UserMapping.user.getAccounts().get(accountsIndex).getType());
                     accId.setText(UserMapping.user.getAccounts().get(accountsIndex).get_id());
                     accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(accountsIndex).getBalance()));
                 }
@@ -66,11 +69,12 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
         previousAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<TransactionDataModel> transactionData = getAccountTransactions(accountsIndex-1);
+                ArrayList<Transaction> transactionData = getAccountTransactions(accountsIndex-1);
                 if (transactionData != null) {
                     transactionAdapter = new TransactionAdapter(getContext(), transactionData);
                     recyclerView.setAdapter(transactionAdapter);
                     accountsIndex--;
+                    accType.setText(UserMapping.user.getAccounts().get(accountsIndex).getType());
                     accId.setText(UserMapping.user.getAccounts().get(accountsIndex).get_id());
                     accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(accountsIndex).getBalance()));
                 }
@@ -80,8 +84,8 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
         return view;
     }
 
-    private ArrayList<TransactionDataModel> getAccountTransactions(int position){
-        ArrayList<TransactionDataModel> transactionData = new ArrayList<>();
+    private ArrayList<Transaction> getAccountTransactions(int position){
+        ArrayList<Transaction> transactionData = new ArrayList<>();
         try {
             ArrayList<Transaction> userTransaction = UserMapping.user.getAccounts().get(position).getTransactions();
 
@@ -91,7 +95,7 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
                 String type = userTransaction.get(i).getType();
                 float amount = userTransaction.get(i).getAmount();
                 String name = userTransaction.get(i).getDescription();
-                transactionData.add ( new TransactionDataModel(date,type, Float.toString(amount),id,name));
+                transactionData.add ( new Transaction(date, type, amount, id, name));
             }
 
             return transactionData;

@@ -1,6 +1,7 @@
 package com.example.edb.Controller;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.edb.Model.Transaction;
 import com.example.edb.R;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.MyViewHolder> {
 
     private Context mContext;
-    private final ArrayList <TransactionDataModel> dataSet;
+    private final ArrayList <Transaction> dataSet;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -34,6 +36,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         TextView transactionAmountText;
         TextView transactionIDText;
         TextView transactionNameText;
+        TextView transactionCurrency;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -42,6 +45,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             this.transactionAmountText = itemView.findViewById(R.id.transaction_amount_txt);
             this.transactionIDText = itemView.findViewById(R.id.transaction_id_txt);
             this.transactionNameText = itemView.findViewById(R.id.transaction_name_txt);
+            this.transactionCurrency = itemView.findViewById(R.id.transaction_currency_txt);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -57,7 +61,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 
-    public TransactionAdapter(Context context,ArrayList<TransactionDataModel> data) {
+    public TransactionAdapter(Context context,ArrayList<Transaction> data) {
         this.mContext = context;
         this.dataSet = data;
     }
@@ -71,17 +75,24 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-        String date = dataSet.get(listPosition).getTransactionDate();
+        String date = dataSet.get(listPosition).getDate();
 
-        holder.transactionDateText.setText(date.substring(5,10));
-        holder.transactionIDText.setText(dataSet.get(listPosition).getTransactionID());
-        holder.transactionNameText.setText(dataSet.get(listPosition).getTransactionName());
-        holder.transactionAmountText.setText(dataSet.get(listPosition).getAmount());
-        if (dataSet.get(listPosition).getTransactionType().equals("withdraw"))
+        holder.transactionDateText.setText(date.substring(5,10).replace("-","/"));
+        holder.transactionIDText.setText(dataSet.get(listPosition).get_id().substring(12));
+        holder.transactionNameText.setText(dataSet.get(listPosition).getDescription());
+        holder.transactionAmountText.setText(String.valueOf(dataSet.get(listPosition).getAmount()));
+        if (dataSet.get(listPosition).getType().equals("withdraw")) {
             holder.transactionTypeText.setText("-");
-        else
+            holder.transactionCurrency.setTextColor(Color.RED);
+            holder.transactionTypeText.setTextColor(Color.RED);
+            holder.transactionAmountText.setTextColor(Color.RED);
+        }
+        else {
             holder.transactionTypeText.setText("+");
-
+            holder.transactionCurrency.setTextColor(Color.GREEN);
+            holder.transactionTypeText.setTextColor(Color.GREEN);
+            holder.transactionAmountText.setTextColor(Color.GREEN);
+        }
     }
 
     @Override
