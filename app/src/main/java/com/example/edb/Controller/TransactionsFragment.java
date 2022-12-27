@@ -38,7 +38,7 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
             listPosition = args.getInt("position");
             accountsIndex = listPosition;
             accType.setText(UserMapping.user.getAccounts().get(listPosition).getType());
-            accId.setText(UserMapping.user.getAccounts().get(listPosition).get_id());
+            accId.setText(UserMapping.user.getAccounts().get(listPosition).getAccountNumber());
             accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(listPosition).getBalance()));
         }
 
@@ -61,7 +61,7 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
                     recyclerView.setAdapter(transactionAdapter);
                     accountsIndex++;
                     accType.setText(UserMapping.user.getAccounts().get(accountsIndex).getType());
-                    accId.setText(UserMapping.user.getAccounts().get(accountsIndex).get_id());
+                    accId.setText(UserMapping.user.getAccounts().get(accountsIndex).getAccountNumber());
                     accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(accountsIndex).getBalance()));
                 }
             }
@@ -75,7 +75,7 @@ public class TransactionsFragment extends Fragment implements TransactionAdapter
                     recyclerView.setAdapter(transactionAdapter);
                     accountsIndex--;
                     accType.setText(UserMapping.user.getAccounts().get(accountsIndex).getType());
-                    accId.setText(UserMapping.user.getAccounts().get(accountsIndex).get_id());
+                    accId.setText(UserMapping.user.getAccounts().get(accountsIndex).getAccountNumber());
                     accBalance.setText(String.valueOf(UserMapping.user.getAccounts().get(accountsIndex).getBalance()));
                 }
             }

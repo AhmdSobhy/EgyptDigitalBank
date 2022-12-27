@@ -20,24 +20,10 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.97" />
 
-   <!-- <androidx.core.widget.NestedScrollView
-        android:id="@+id/quick_links_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
-        app:layout_constraintEnd_toEndOf="@id/end_guideline"
-        app:layout_constraintStart_toStartOf="@id/start_guideline"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include layout="@layout/activity_home" />
-    </androidx.core.widget.NestedScrollView>-->
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_container"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
         app:layout_constraintTop_toTopOf="parent"/>

@@ -41,7 +41,8 @@ public class ATMFragment extends Fragment {
     LinearLayout errorLayout;
     static String transactionType;
     User user = UserMapping.user;
-    private ArrayList<String> accountID;
+    private ArrayList<String> accountsIDs;
+    private ArrayList<String> accountsNumbers;
     private ArrayAdapter<String> accountArrayAdapter;
     int indexOfAccount=0;
     float newBalance =0;
@@ -63,13 +64,14 @@ public class ATMFragment extends Fragment {
 
         // Getting all the accounts for the user
         try {
-            accountID = new ArrayList<>();
+            accountsIDs = new ArrayList<>();
+            accountsNumbers = new ArrayList<>();
             for (int i = 0; i < user.getAccounts().size(); i++) {
-
-                accountID.add(user.getAccounts().get(i).get_id());
+                //accountsNumbers.add(user.getAccounts().get(i).getAccountNumber());
+                accountsIDs.add(user.getAccounts().get(i).get_id());
             }
             // adding them to the Accounts (autocomplete)
-            accountArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, accountID);
+            accountArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, accountsIDs);
             accAutoComplete.setAdapter(accountArrayAdapter);
             //temp check
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "+user.getAccounts().get(1).getBalance());
@@ -110,10 +112,11 @@ public class ATMFragment extends Fragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String account = accAutoComplete.getText().toString();
+                String accountId = accAutoComplete.getText().toString();
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "+ accountId);
                 String amount = amountTxt.getText().toString();
-                if (!account.isEmpty() && !amount.isEmpty()) {
-                    confirmTransaction(account, Float.parseFloat(amount));
+                if (!accountId.isEmpty() && !amount.isEmpty()) {
+                    confirmTransaction(accountId, Float.parseFloat(amount));
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -229,5 +232,14 @@ public class ATMFragment extends Fragment {
             }
         });
         return transactionIsMade[0];
+    }
+
+    public String getAccountId(String accountNumber){
+        for (String accId:accountsIDs) {
+            if(accId.replaceAll("[^0-9]","").equals(accountNumber))
+                return accId;
+            break;
+        }
+        return null;
     }
 }

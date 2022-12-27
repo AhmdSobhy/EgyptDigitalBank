@@ -70,7 +70,7 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
-        holder.accountNumText.setText(dataSet.get(listPosition).get_id());
+        holder.accountNumText.setText(dataSet.get(listPosition).getAccountNumber());
         holder.balanceText.setText(String.valueOf(dataSet.get(listPosition).getBalance()));
         holder.accountIcon.setImageResource(R.drawable.ic_mastercard_logo_192);
     }

@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
-        android:title="Home"
+        android:title="@string/menu_home_txt"
         android:icon="@drawable/ic_home_96"/>
     <item
         android:id="@+id/menu_wallet"
-        android:title="Wallet"
-        android:icon="@drawable/ic_wallet_120"/>
+        android:title="@string/menu_requests_txt"
+        android:icon="@drawable/ic_inscription"/>
     <item
         android:id="@+id/menu_transfer"
-        android:title="Transfer"
+        android:title="@string/menu_transfer_txt"
         android:icon="@drawable/ic_data_transfer_96"/>
     <item
         android:id="@+id/menu_profile"
-        android:title="Profile"
+        android:title="@string/menu_profile_txt"
         android:icon="@drawable/ic_male_user_100"/>
 </menu>

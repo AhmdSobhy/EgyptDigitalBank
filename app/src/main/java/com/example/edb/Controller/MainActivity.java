@@ -35,6 +35,7 @@ MainActivity extends AppCompatActivity {
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.menu_wallet:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new RequestsFragment()).addToBackStack("HomeFragment").commit();
                     return true;
                 case R.id.menu_transfer:
                     startActivity(new Intent(getApplicationContext(), TransferActivity.class));

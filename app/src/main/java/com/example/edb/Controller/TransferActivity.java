@@ -29,12 +29,10 @@ public class TransferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
-
         BottomNavigationView bottomNavigationView;
-        EditText senderAccNum = findViewById(R.id.sender_acc_txt);
         EditText receiverAccNum = findViewById(R.id.receiver_acc_txt);
         EditText amount = findViewById(R.id.amount_txt);
-        Button transferBtn = findViewById(R.id.confirm_btn);
+        Button transferBtn = findViewById(R.id.transfer_btn);
         Intent intent = getIntent();
         sender = (User) intent.getSerializableExtra("user");
         bottomNavigationView = findViewById(R.id.bottom_nav);

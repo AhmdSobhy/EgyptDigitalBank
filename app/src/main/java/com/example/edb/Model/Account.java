@@ -35,6 +35,8 @@ public class Account implements Serializable {
     @Expose
     private String _id;
 
+    private String accountNumber;
+
     //Constructors
     public Account(String id, float balance) {
         this._id = id;
@@ -49,8 +51,8 @@ public class Account implements Serializable {
         this.Currency = Currency;
         this.Status = Status;
         this.DateOfCreation = DateOfCreation;
+        setAccountNumber();
     }
-
 
     // Getter Methods
 
@@ -77,6 +79,12 @@ public class Account implements Serializable {
     public String get_id() {
         return _id;
     }
+
+    public String getAccountNumber() {
+        setAccountNumber();
+        return accountNumber;
+    }
+
     public ArrayList<Transaction> getTransactions() {
         return Transactions;
     }
@@ -105,5 +113,9 @@ public class Account implements Serializable {
 
     public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public void setAccountNumber() {
+        this.accountNumber = get_id().replaceAll("[^0-9]","");
     }
 }

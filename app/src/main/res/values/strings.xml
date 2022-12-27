@@ -41,4 +41,14 @@
     <string name="withdraw_txt">Withdraw</string>
     <string name="transaction_completed_successfully">Transaction Completed \nSuccessfully</string>
     <string name="thank_you">Thank You</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logout">Logout</string>
+    <string name="add_account">Add Account</string>
+    <string name="change_password">Change Password</string>
+    <string name="menu_home_txt">Home</string>
+    <string name="menu_requests_txt">Requests</string>
+    <string name="menu_transfer_txt">Transfer</string>
+    <string name="menu_profile_txt">Profile</string>
+    <string name="profile_information">Profile Information</string>
 </resources>

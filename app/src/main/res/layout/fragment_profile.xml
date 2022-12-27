@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="top"
     tools:context=".Controller.ProfileFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -41,7 +42,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="1dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+        android:foregroundGravity="top"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
         app:layout_constraintTop_toTopOf="@id/top_guideline">
@@ -49,7 +50,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="top"
+            android:layout_gravity="top">
 
             <TextView
                 android:id="@+id/create_acc"
@@ -57,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="32dp"
-                android:text="Profile Information"
+                android:text="@string/profile_information"
                 android:textSize="20sp" />
 
             <TextView
@@ -150,7 +153,7 @@
                 android:drawablePadding="5dp"
                 android:ems="10"
                 android:hint="@string/email_format"
-                android:inputType="number"
+                android:inputType="textEmailAddress"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="10dp"
                 android:clickable="false"
@@ -182,7 +185,15 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"/>
 
-
+            <Button
+                android:layout_marginTop="40sp"
+                android:id="@+id/logout_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:padding="10dp"
+                android:text="@string/logout"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
     </ScrollView>
