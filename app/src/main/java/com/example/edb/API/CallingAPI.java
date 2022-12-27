@@ -61,7 +61,9 @@ public class CallingAPI {
         });
         return user;
     }
-    public void updateBalance(String userSSN, String accountId,  HashMap<String,String>map){
+    public void updateBalance(String userSSN, String accountId, String newBalance){
+        HashMap<String,String>map=new HashMap<>();
+        map.put("Balance",newBalance);
         Call<Void> call = apiInterface.updateBalance(userSSN,accountId,map);
 
         call.enqueue(new Callback<Void>() {
@@ -103,10 +105,14 @@ public class CallingAPI {
     }
 
     public void addTransaction(String userSSN, String accountID, Transaction transactionToAdd){
+        retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
+        apiInterface = retrofit.create(ApiInterface.class);
+        System.out.println("Add transaction is heeeeeeeeeeeeeeeeeeere");
         Call<Void> call = apiInterface.addTransaction(userSSN,accountID,transactionToAdd);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                System.out.println("Response Code : "+response.code());
                 if(response.isSuccessful()){
                     System.out.println("Transaction is added Successfully");
                 }

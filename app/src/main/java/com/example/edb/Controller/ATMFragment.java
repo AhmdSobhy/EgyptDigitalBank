@@ -1,11 +1,13 @@
 package com.example.edb.Controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +20,16 @@ import android.widget.Toast;
 
 import com.example.edb.API.ApiInterface;
 import com.example.edb.API.ApiUrl;
+import com.example.edb.API.CallingAPI;
 import com.example.edb.Model.Account;
 import com.example.edb.Model.Transaction;
 import com.example.edb.Model.User;
 import com.example.edb.R;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -72,10 +77,8 @@ public class ATMFragment extends Fragment {
             accountArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, accountID);
             accAutoComplete.setAdapter(accountArrayAdapter);
             //temp check
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  "+user.getAccounts().get(1).getBalance());
-        }
-        catch(Exception e)
-        {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  " + user.getAccounts().get(1).getBalance());
+        } catch (Exception e) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Error Fetching Account IDs for AutoComplete!");
             e.printStackTrace();
         }
@@ -123,111 +126,55 @@ public class ATMFragment extends Fragment {
                         }
                     }, 4000);
 
-                }
-                else
-                    Toast.makeText(getContext(),"Invalid Account or Amount",Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getContext(), "Invalid Account or Amount", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
         return view;
     }
 
-    private void confirmTransaction(String account, float amount) {
+    private void confirmTransaction(String accountId, float amount) {
         try {
+            String description="";
             // for loop to get the index of the chosen account to get it's balance
-            for (int i = 0; i < user.getAccounts().size(); i++) {
-                if (account.equals(user.getAccounts().get(i).get_id())) {
-                    float senderBalance = user.getAccounts().get(i).getBalance();
+            for (Account acc:user.getAccounts()) {
+                if (accountId.equals(acc.get_id())) {
+                    float senderBalance =acc.getBalance();
                     if (transactionType.equals("Deposit")) {
                         newBalance = senderBalance + amount;
-                        updateBalance(i,"deposit",amount,"Deposit at Virtual ATM");
+                        description="Deposit at ATM";
                     }
-                    else if (transactionType.equals("Withdraw")) {
+                    else {
                         // checking if the Account's balance is less than the amount to be Withdrawn
-                        if (user.getAccounts().get(i).getBalance() >= amount) {
+                        if (acc.getBalance() >= amount) {
                             newBalance = senderBalance - amount;
-                            updateBalance(i,"withdraw",amount,"Cash Withdrawal at Virtual ATM");
+                            description="Withdraw at ATM";
                         }
                         else {
                             Toast.makeText(getContext(), "Insufficient balance in your Account", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    acc.setBalance(newBalance);
+                    break;
                 }
             }
+
+            CallingAPI callingAPI=new CallingAPI();
+            callingAPI.updateBalance(user.getSSN(),accountId, String.valueOf(newBalance));
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
+            Date date = new Date();
+            Transaction transactionToSend=new Transaction(transactionType, amount,description,(formatter.format(date)));
+
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    callingAPI.addTransaction(user.getSSN(),accountId,transactionToSend);
+                }
+            }, 5000);
         }
         catch(Exception e) {
             System.out.println("problem with creating call (getUserAccountId)");
         }
     }
 
-    private void updateBalance(int i, String type, float amount, String description){
-        String cloudDbUrl = ApiUrl.serverUrl;
-        Retrofit retrofitUpdateBalance = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
-        ApiInterface apiUpdateBalance = retrofitUpdateBalance.create(ApiInterface.class);
-        HashMap<String, String> balanceMap = new HashMap<>();
-
-        Account userAccount = user.getAccounts().get(i);
-        userAccount.setBalance(newBalance);
-        balanceMap.put("Balance", String.valueOf(newBalance));
-        //we make a call for sender and update the balance
-        indexOfAccount = i;
-        callUpdateAccount = apiUpdateBalance.updateBalance(user.getSSN(), user.getAccounts().get(indexOfAccount).get_id(), balanceMap);
-
-        callUpdateAccount.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, @NonNull Response<Void> response) {
-                if (response.code() == 200) {
-                    if(makeTransaction(userAccount, type, amount,description)) {
-                        transactionLayout.setVisibility(View.GONE);
-                        confirmationLayout.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        transactionLayout.setVisibility(View.GONE);
-                        errorLayout.setVisibility(View.VISIBLE);
-                        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! error in makeTransaction");
-                    }
-
-                } else {
-                    transactionLayout.setVisibility(View.GONE);
-                    errorLayout.setVisibility(View.VISIBLE);
-                    System.out.println("A33333333333333333333333333333 in update sender");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                transactionLayout.setVisibility(View.GONE);
-                errorLayout.setVisibility(View.VISIBLE);
-                System.out.println("Error in update balance");
-            }
-        });
-    }
-    private boolean makeTransaction(Account account, String type, float amount, String description){
-        final boolean[] transactionIsMade = new boolean[1];
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiUrl.serverUrl).addConverterFactory(GsonConverterFactory.create()).build();
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Transaction transaction = new Transaction(LocalDate.now().toString(), type, amount, description);
-
-        Call call = apiInterface.addTransaction(user.getSSN(), account.get_id(),transaction);
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, @NonNull Response response) {
-                if (response.code() == 200) {
-                   transactionIsMade[0] = true;
-                } else {
-                    transactionIsMade[0] = false;
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>> Response code is "+response.code());
-                    Toast.makeText(getContext(), "Response code is "+response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                Toast.makeText(getContext(), "Failed to make transaction", Toast.LENGTH_SHORT).show();
-            }
-        });
-        return transactionIsMade[0];
-    }
 }
