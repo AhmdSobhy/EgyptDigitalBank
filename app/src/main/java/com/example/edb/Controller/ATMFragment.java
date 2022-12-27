@@ -1,9 +1,7 @@
 package com.example.edb.Controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -18,8 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.edb.API.ApiInterface;
-import com.example.edb.API.ApiUrl;
 import com.example.edb.API.CallingAPI;
 import com.example.edb.Model.Account;
 import com.example.edb.Model.Transaction;
@@ -27,16 +23,10 @@ import com.example.edb.Model.User;
 import com.example.edb.R;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ATMFragment extends Fragment {
 
