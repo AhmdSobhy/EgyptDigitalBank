@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     User user=UserMapping.user;
-                    assert (user!=null);
                     sharedPreferences.edit().putString("email", user.getEmail()).commit();
                     sharedPreferences.edit().putString("password", user.getPassword()).commit();
                     System.out.println(user.getEmail());

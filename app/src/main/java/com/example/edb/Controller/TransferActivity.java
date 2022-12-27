@@ -1,28 +1,34 @@
 package com.example.edb.Controller;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.edb.API.ApiInterface;
 import com.example.edb.API.ApiUrl;
 import com.example.edb.API.CallingAPI;
+import com.example.edb.API.*;
 import com.example.edb.Model.Transaction;
-import com.example.edb.Model.User;
 import com.example.edb.R;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.edb.Model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
+import okio.Timeout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,11 +38,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TransferActivity extends AppCompatActivity {
     User sender;
     User Receiver;
-    float newBalanceR = 0;
-    float newBalanceS = 0;
+    private ArrayAdapter<String> accountArrayAdapter;
+    float newBalanceR=0;
+    float newBalanceS=0;
     CallingAPI dbTransfer = new CallingAPI();
     ApiUrl apiUri = new ApiUrl();
-    private ArrayAdapter<String> accountArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +57,12 @@ public class TransferActivity extends AppCompatActivity {
         sender = UserMapping.user;
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.menu_transfer);
-        AutoCompleteTextView senderAutoComplete = findViewById(R.id.sender_acc_txt);
+        AutoCompleteTextView senderAutoComplete =findViewById(R.id.sender_acc_txt);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()) {
+            switch (item.getItemId()){
                 case R.id.menu_home:
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    overridePendingTransition(0, 0);
+                    overridePendingTransition(0,0);
                     return true;
                 case R.id.menu_wallet:
                     return true;
@@ -75,7 +81,9 @@ public class TransferActivity extends AppCompatActivity {
 
             accountArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, dbTransfer.fetchAccounts(sender));
             senderAutoComplete.setAdapter(accountArrayAdapter);
-        } catch (Exception e) {
+        }
+        catch(Exception e)
+        {
             System.out.println("Error Fetching Account IDs for AutoComplete!");
         }
 
@@ -85,63 +93,71 @@ public class TransferActivity extends AppCompatActivity {
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String recAccID = receiverAccNum.getText().toString();
+                String recAccID= receiverAccNum.getText().toString();
                 String senderAccountID = senderAutoComplete.getText().toString();
                 String RecevierID = receiverAccNum.getText().toString();
                 Retrofit retrofitUser = new Retrofit.Builder().baseUrl(ApiUrl.serverUrl).addConverterFactory(GsonConverterFactory.create()).build();
                 ApiInterface apiInterfaceUser = retrofitUser.create(ApiInterface.class);
                 Call<User> callReceiverGetUser = apiInterfaceUser.getUserByAccountId(recAccID);
-                CallingAPI callingAPI = new CallingAPI();
+                CallingAPI callingAPI=new CallingAPI();
 
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
                 Date date = new Date();
 
-                Transaction transaction = new Transaction("Transfer", Float.parseFloat(amount.getText().toString()), "Transfer to account no: " + receiverAccNum, (formatter.format(date)));
+                Transaction transaction= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "Transfer to account no: "+receiverAccNum,(formatter.format(date)));
+
 
 
                 callReceiverGetUser.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, @NonNull Response<User> response) {
-                        System.out.println("Response code: " + response.code());
+                        System.out.println("Response code: "+response.code());
                         if (response.code() == 200) {
-                            Receiver = response.body();
+                            Receiver=response.body();
                             for (int j = 0; j < Receiver.getAccounts().size(); j++) {
                                 // update receiver's balance
                                 if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
 
-//                                    addTransaction(Receiver.getSSN(),RecevierID,transaction);
+                                    final Handler handler = new Handler(Looper.getMainLooper());
+                                    handler.postDelayed(new Runnable() {
+                                        public void run() {
+                                            addTransaction(Receiver.getSSN(),RecevierID,transaction);
+                                        }
+                                    },1000);
 
                                     newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
-                                    dbTransfer.updateBalance(Receiver.getSSN(), Receiver.getAccounts().get(j).get_id(), String.valueOf(newBalanceR));
+                                    dbTransfer.updateBalance(Receiver.getSSN(),Receiver.getAccounts().get(j).get_id(),String.valueOf(newBalanceR));
+
 
 
                                     for (int i = 0; i < sender.getAccounts().size(); i++) {
                                         if (senderAccountID.equals(sender.getAccounts().get(i).get_id())) {
-                                            if (sender.getAccounts().get(i).getBalance() >= Float.parseFloat(amount.getText().toString())) { //update sender's balance
+                                            if (sender.getAccounts().get(i).getBalance()>=Float.parseFloat(amount.getText().toString())) { //update sender's balance
                                                 newBalanceS = sender.getAccounts().get(i).getBalance() - Float.parseFloat(amount.getText().toString());
                                                 sender.getAccounts().get(i).setBalance(newBalanceS);
-                                                dbTransfer.updateBalance(sender.getSSN(), sender.getAccounts().get(i).get_id(), String.valueOf(newBalanceS));
+                                                dbTransfer.updateBalance(sender.getSSN(), sender.getAccounts().get(i).get_id(),String.valueOf(newBalanceS) );
 
+                                                handler.postDelayed(new Runnable() {
+                                                    public void run() {
+                                                        transaction.setDescription("transaction from "+sender.getFullName());
+                                                        addTransaction(Receiver.getSSN(),RecevierID,transaction);
 
-                                                sender.getAccounts().get(i).addTransaction(transaction);
-                                                addTransaction(Receiver.getSSN(), RecevierID, transaction);
-                                                transaction.setDescription("transaction from " + sender.getFullName());
-                                                addTransaction(Receiver.getSSN(), RecevierID, transaction);
+                                                        Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
+                                                        Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
 
-                                                Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
-                                                UserMapping.user=sender;
-                                                Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
-
-                                                ReOpenContext.putExtra("user", sender);
-                                                startActivity(ReOpenContext);
+                                                        ReOpenContext.putExtra("user", sender);
+                                                        startActivity(ReOpenContext);
+                                                    }
+                                                },1000);
 
                                                 break;
                                             }
                                         }
                                     }
                                     break;
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Error in updating receivers data", Toast.LENGTH_LONG);
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(),"Error in updating receivers data",Toast.LENGTH_LONG);
                                 }
                             }
                         }
@@ -156,13 +172,15 @@ public class TransferActivity extends AppCompatActivity {
                 });
 
 
+
+
             }
 
         });
 
     }
 
-    private void addTransaction(String userSSN, String accountId, Transaction transaction) {
-        dbTransfer.addTransaction(userSSN, accountId, transaction);
+    private void addTransaction(String userSSN, String accountId, Transaction transaction){
+        dbTransfer.addTransaction(userSSN,accountId,transaction);
     }
 }
