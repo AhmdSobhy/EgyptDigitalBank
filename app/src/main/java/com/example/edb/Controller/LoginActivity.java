@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,15 +76,20 @@ public class LoginActivity extends AppCompatActivity {
 
     void loginFromAPI(String email, String password) {
         CallingAPI callingAPI=new CallingAPI();
-        User user=callingAPI.login(email,password);
-        for (int i=0;i<1e8;i++);
-//        assert (user!= null);
-        UserMapping.user = user;
-        sharedPreferences.edit().putString("email", user.getEmail()).commit();
-        sharedPreferences.edit().putString("password", user.getPassword()).commit();
-        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-        i.putExtra("user", user);
-        startActivity(i);
+        callingAPI.login(email,password);
+
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                User user=UserMapping.user;
+                sharedPreferences.edit().putString("email", user.getEmail()).commit();
+                sharedPreferences.edit().putString("password", user.getPassword()).commit();
+                System.out.println(user.getEmail());
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                i.putExtra("user", user);
+                startActivity(i);
+            }
+        }, 5000);
     }
 
     void loginWithFingerprint() {

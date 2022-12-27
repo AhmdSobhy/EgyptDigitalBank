@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.edb.Controller.LoginActivity;
 import com.example.edb.Controller.MainActivity;
+import com.example.edb.Controller.UserMapping;
 import com.example.edb.Model.Transaction;
 import com.example.edb.Model.User;
 
@@ -45,6 +46,9 @@ public class CallingAPI {
                 System.out.println("Response code: "+response.code());
                 if(response.code()==200){
                     user=response.body();
+                    UserMapping.user=user;
+                    System.out.println(user.getEmail());
+                    System.out.println("=======================================");
                 }
                 else{
                     System.out.println("Wrong Email or Password");
@@ -58,8 +62,6 @@ public class CallingAPI {
         return user;
     }
     public void updateBalance(String userSSN, String accountId,  HashMap<String,String>map){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         Call<Void> call = apiInterface.updateBalance(userSSN,accountId,map);
 
         call.enqueue(new Callback<Void>() {
@@ -80,8 +82,6 @@ public class CallingAPI {
     public User getUserByAccountId(String accountID){
         System.out.println("================================================");
         System.out.println("Account ID "+ accountID);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         Call<User> call = apiInterface.getUserByAccountId(accountID);
         call.enqueue(new Callback<User>() {
             @Override
@@ -114,7 +114,6 @@ public class CallingAPI {
                     System.out.println("Failed to add transaction");
                 }
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 System.out.println("Error at Internet Connection");
