@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.edb.API.ApiInterface;
+import com.example.edb.API.ApiUrl;
 import com.example.edb.Model.Account;
 import com.example.edb.Model.User;
 import com.example.edb.R;
@@ -59,7 +60,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         accountType.setAdapter(accountTypes);
 
 
-        //final Boolean[] UserSuccessfullyCreated = new Boolean[1];
+
 
 
         createAccBtn.setOnClickListener(new View.OnClickListener() {
@@ -67,20 +68,30 @@ public class CreateAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                //checking if passwords are not matching
                 if (!(passwordTxt.getText().toString().equals(rePasswordTxt.getText().toString()))) {
                     Toast.makeText(CreateAccountActivity.this, "Passwords not matching", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                //checking if there is an empty field
+                if(fullNameTxt.getText().toString().isEmpty() || addressTxt.getText().toString().isEmpty() || mobileNumTxt.getText().toString().isEmpty() ||
+                        emailTxt.getText().toString().isEmpty() || nationalIDTxt.getText().toString().isEmpty() ||passwordTxt.getText().toString().isEmpty()
+                || rePasswordTxt.getText().toString().isEmpty() || genderType.getText().toString().isEmpty() || accountType.getText().toString().isEmpty() )
+                {
+                    Toast.makeText(CreateAccountActivity.this, "Please fill all the fields", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 User user = new User(nationalIDTxt.getText().toString(), fullNameTxt.getText().toString(), emailTxt.getText().toString(),
                         passwordTxt.getText().toString(), genderType.getText().toString(), mobileNumTxt.getText().toString(),addressTxt.getText().toString());
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
                 Date date = new Date();
-                System.out.println(formatter.format(date));
+
                 Account account = new Account(accountType.getText().toString(), 0, "EGY", "Active", (formatter.format(date)));
 
 
-                String cloudDbUrl = "https://bank-db-api.herokuapp.com/";
+                String cloudDbUrl = ApiUrl.serverUrl;
 
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
                 ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -95,16 +106,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                             Toast.makeText(CreateAccountActivity.this, "User Created Successfully", Toast.LENGTH_LONG).show();
 
-                            HashMap<String, String> map = new HashMap<>();
-                            HashMap<String, Account> map1 = new HashMap<>();
-                            map.put("SSN", nationalIDTxt.getText().toString());
-
-                            map1.put("Accounts", account);
-                            map.put("Accounts", passwordTxt.getText().toString());
-                            User user1 = new User(nationalIDTxt.getText().toString(), account);
-                            System.out.println(user1.getSSN());
-                            System.out.println(accountType.getText().toString());
-
                             Retrofit retrofit2 = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
                             ApiInterface apiInterface2 = retrofit2.create(ApiInterface.class);
                             Call call2 = apiInterface2.createAccount(nationalIDTxt.getText().toString(), account);
@@ -113,9 +114,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call call, @NonNull Response response) {
                                     if (response.code() == 200) {
-                                        Toast.makeText(CreateAccountActivity.this, "User and account Created Successfully", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CreateAccountActivity.this, "Account Created Successfully", Toast.LENGTH_LONG).show();
                                         Intent i = new Intent(CreateAccountActivity.this, LoginActivity.class);
-                                        // i.putExtra("user",user);
                                         startActivity(i);
                                     } else {
                                         Toast.makeText(CreateAccountActivity.this, "Response code is"+response.code(), Toast.LENGTH_LONG).show();
@@ -123,7 +123,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 }
                                 @Override
                                 public void onFailure(Call call, Throwable t) {
-                                    Toast.makeText(CreateAccountActivity.this, "Error2", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(CreateAccountActivity.this, "Error", Toast.LENGTH_LONG).show();
                                 }
                             });
                         } else {
@@ -133,18 +133,17 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call call, Throwable t) {
-                        System.out.println("errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+
                         System.out.println(accountType.getText().toString());
                         t.printStackTrace();
-                        //t.printStackTrace();
+
                         Toast.makeText(CreateAccountActivity.this, "Error", Toast.LENGTH_LONG).show();
 
                     }
                 });
 
 
-                //Intent i = new Intent(CreateAccountActivity.this, MainActivity.class);
-                //startActivity(i);
+
             }
         });
 
