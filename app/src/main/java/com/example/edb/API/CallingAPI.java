@@ -11,6 +11,7 @@ import com.example.edb.Controller.UserMapping;
 import com.example.edb.Model.Transaction;
 import com.example.edb.Model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -125,5 +126,28 @@ public class CallingAPI {
                 System.out.println("Error at Internet Connection");
             }
         });
+    }
+    /*
+     *  GET ALL USER'S ACCOUNTS FOR THE AUTOCOMPLETE EDIT TEXT
+     * */
+    public ArrayList<String> fetchAccounts(User sender)
+    {
+        ArrayList<String> accountID;
+        try {
+            // getting all the accounts for the user (sender)
+
+            accountID = new ArrayList<>();
+            for (int i = 0; i < sender.getAccounts().size(); i++) {
+
+                accountID.add(sender.getAccounts().get(i).get_id());
+            }
+            // adding them to the senders combobox (autocompleteview)
+            return accountID;
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error Fetching Account IDs for AutoComplete!");
+            return null;
+        }
     }
 }

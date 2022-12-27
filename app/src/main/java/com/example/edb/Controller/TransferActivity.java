@@ -10,8 +10,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.example.edb.API.ApiInterface;
-import com.example.edb.APIUri;
-import com.example.edb.DbHelperTransferMoney;
+import com.example.edb.API.ApiUrl;
+import com.example.edb.API.CallingAPI;
+import com.example.edb.API.*;
 import com.example.edb.R;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,8 +36,8 @@ public class TransferActivity extends AppCompatActivity {
     private ArrayAdapter<String> accountArrayAdapter;
     float newBalanceR=0;
     float newBalanceS=0;
-    DbHelperTransferMoney dbTransfer = new DbHelperTransferMoney();
-    APIUri apiUri = new APIUri();
+    CallingAPI dbTransfer = new CallingAPI();
+    ApiUrl apiUri = new ApiUrl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class TransferActivity extends AppCompatActivity {
         EditText senderAccNum = findViewById(R.id.sender_acc_txt);
         EditText receiverAccNum = findViewById(R.id.receiver_acc_txt);
         EditText amount = findViewById(R.id.amount_txt);
-        Button transferBtn = findViewById(R.id.confirm_btn);
+        Button transferBtn = findViewById(R.id.transfer_btn);
         Intent intent = getIntent();
         sender = (User) intent.getSerializableExtra("user");
         bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -70,8 +71,8 @@ public class TransferActivity extends AppCompatActivity {
         });
 
         /*
-        *  GET ALL USER'S ACCOUNTS FOR THE AUTOCOMPLETE EDIT TEXT
-        * */
+         *  GET ALL USER'S ACCOUNTS FOR THE AUTOCOMPLETE EDIT TEXT
+         * */
         try {
 
             accountArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, dbTransfer.fetchAccounts(sender));
@@ -91,41 +92,41 @@ public class TransferActivity extends AppCompatActivity {
                 String recAccID= receiverAccNum.getText().toString();
                 String senderAccountID = senderAutoComplete.getText().toString();
                 String RecevierID = receiverAccNum.getText().toString();
-                Retrofit retrofitUser = new Retrofit.Builder().baseUrl(apiUri.cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
+                Retrofit retrofitUser = new Retrofit.Builder().baseUrl(apiUri.url).addConverterFactory(GsonConverterFactory.create()).build();
                 ApiInterface apiInterfaceUser = retrofitUser.create(ApiInterface.class);
                 Call<User> callReceiverGetUser = apiInterfaceUser.getUserByAccountId(recAccID);
 
                 callReceiverGetUser.enqueue(new Callback<User>() {
                     @Override
-            public void onResponse(Call<User> call, @NonNull Response<User> response) {
-            if (response.code() == 200) {
-                Receiver=response.body();
-                    for (int j = 0; j < Receiver.getAccounts().size(); j++) {
-                        // update receiver's balance
-                        if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
-                            newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
-                            dbTransfer.UpdateCall(Receiver,String.valueOf(newBalanceR),j);
+                    public void onResponse(Call<User> call, @NonNull Response<User> response) {
+                        if (response.code() == 200) {
+                            Receiver=response.body();
+                            for (int j = 0; j < Receiver.getAccounts().size(); j++) {
+                                // update receiver's balance
+                                if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
+                                    newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
+                                    dbTransfer.updateBalance(Receiver.getSSN(),Receiver.getAccounts().get(j).get_id(),String.valueOf(newBalanceR));
 
-                            for (int i = 0; i < sender.getAccounts().size(); i++) {
-                                if (senderAccountID.equals(sender.getAccounts().get(i).get_id())) {
-                                    if (sender.getAccounts().get(i).getBalance()>=Float.parseFloat(amount.getText().toString()))
-                                    { //update sender's balance
-                                        newBalanceS = sender.getAccounts().get(i).getBalance() - Float.parseFloat(amount.getText().toString());
-                                        sender.getAccounts().get(i).setBalance(newBalanceS);
-                                        dbTransfer.UpdateCall(sender, String.valueOf(newBalanceS), i);
-                                        Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
-                                        Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
-                                        ReOpenContext.putExtra("user", sender);
-                                        startActivity(ReOpenContext);
+                                    for (int i = 0; i < sender.getAccounts().size(); i++) {
+                                        if (senderAccountID.equals(sender.getAccounts().get(i).get_id())) {
+                                            if (sender.getAccounts().get(i).getBalance()>=Float.parseFloat(amount.getText().toString()))
+                                            { //update sender's balance
+                                                newBalanceS = sender.getAccounts().get(i).getBalance() - Float.parseFloat(amount.getText().toString());
+                                                sender.getAccounts().get(i).setBalance(newBalanceS);
+                                                dbTransfer.updateBalance(sender.getSSN(), sender.getAccounts().get(i).get_id(),String.valueOf(newBalanceS) );
+                                                Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
+                                                Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
+                                                ReOpenContext.putExtra("user", sender);
+                                                startActivity(ReOpenContext);
+                                            }
+                                        }
                                     }
                                 }
-                           }
-                        }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(),"Error in updating receivers data",Toast.LENGTH_LONG);
-                        }
-                    }
+                                else
+                                {
+                                    Toast.makeText(getApplicationContext(),"Error in updating receivers data",Toast.LENGTH_LONG);
+                                }
+                            }
                         }
 
                     }
