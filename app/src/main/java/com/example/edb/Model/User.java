@@ -112,4 +112,12 @@ public class User implements Serializable {
     public void setPassword(String Password) {
         this.Password = Password;
     }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
 }

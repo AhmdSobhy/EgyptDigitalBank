@@ -26,7 +26,7 @@ public interface  ApiInterface {
     @POST("add-user")
     Call<User> addUser(@Body User user);
 
-    @POST("add-transaction/{userSSN}/{accountID}")
+    @POST("add/transaction/{userSSN}/{accountID}")
     Call<Void> addTransaction(@Path("userSSN") String userSSN, @Path("accountID")String accountId, @Body Transaction transaction);
 
     @PATCH("update-balance/{userSSN}/{accountId}")
