@@ -92,7 +92,7 @@ public class TransferActivity extends AppCompatActivity {
                 String recAccID= receiverAccNum.getText().toString();
                 String senderAccountID = senderAutoComplete.getText().toString();
                 String RecevierID = receiverAccNum.getText().toString();
-                Retrofit retrofitUser = new Retrofit.Builder().baseUrl(apiUri.url).addConverterFactory(GsonConverterFactory.create()).build();
+                Retrofit retrofitUser = new Retrofit.Builder().baseUrl(ApiUrl.serverUrl).addConverterFactory(GsonConverterFactory.create()).build();
                 ApiInterface apiInterfaceUser = retrofitUser.create(ApiInterface.class);
                 Call<User> callReceiverGetUser = apiInterfaceUser.getUserByAccountId(recAccID);
 
