@@ -3,16 +3,11 @@ package com.example.edb.API;
 import com.example.edb.Model.Account;
 import com.example.edb.Model.Transaction;
 import com.example.edb.Model.User;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
@@ -23,10 +18,10 @@ import retrofit2.http.Query;
 public interface  ApiInterface {
 
     @POST("login")
-    Call<User> getUserInfo(@Body User user);
+    Call<User> getUserInfoAndLogin(@Body User user);
 
     @POST("login")
-    Call<User> getUserInfo(@Body HashMap<String, String> map);
+    Call<User> getUserInfoAndLogin(@Body HashMap<String, String> map);
 
     @POST("add-user")
     Call<User> addUser(@Body User user);
