@@ -3,6 +3,7 @@ package com.example.edb;
 import androidx.annotation.NonNull;
 
 import com.example.edb.API.ApiInterface;
+import com.example.edb.API.ApiUrl;
 import com.example.edb.Model.User;
 
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DbHelperTransferMoney {
-    APIUri apiUri = new APIUri();
    public boolean updateCall = false;
    public User byIdUser=null;
 
@@ -49,7 +49,7 @@ public class DbHelperTransferMoney {
      * */
     public void UpdateCall (User user, String balance, int index)
     {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(apiUri.cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiUrl.serverUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         HashMap<String, String> balancemap = new HashMap<>();
         balancemap.put("Balance", String.valueOf(balance));
