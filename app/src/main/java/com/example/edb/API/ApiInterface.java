@@ -32,7 +32,7 @@ public interface  ApiInterface {
     Call<User> addUser(@Body User user);
 
     @POST("add-transaction/{userSSN}/{accountID}")
-    Call<User> addTransaction(@Path("userSSN") String userSSN, @Path("accountID")String accountId, @Body Transaction transaction);
+    Call<Void> addTransaction(@Path("userSSN") String userSSN, @Path("accountID")String accountId, @Body Transaction transaction);
 
     @PATCH("update-balance/{userSSN}/{accountId}")
     Call<Void> updateBalance(@Path("userSSN") String userSSN, @Path("accountId")String accountId, @Body HashMap<String,String>map);
