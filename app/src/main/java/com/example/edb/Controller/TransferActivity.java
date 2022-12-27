@@ -50,7 +50,7 @@ public class TransferActivity extends AppCompatActivity {
         EditText amount = findViewById(R.id.amount_txt);
         Button transferBtn = findViewById(R.id.transfer_btn);
         Intent intent = getIntent();
-        sender = (User) intent.getSerializableExtra("user");
+        sender = UserMapping.user;
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.menu_transfer);
         AutoCompleteTextView senderAutoComplete =findViewById(R.id.sender_acc_txt);
@@ -99,6 +99,7 @@ public class TransferActivity extends AppCompatActivity {
                 callReceiverGetUser.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, @NonNull Response<User> response) {
+                        System.out.println("Response code: "+response.code());
                         if (response.code() == 200) {
                             Receiver=response.body();
                             for (int j = 0; j < Receiver.getAccounts().size(); j++) {
@@ -118,12 +119,14 @@ public class TransferActivity extends AppCompatActivity {
                                                 Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
                                                 ReOpenContext.putExtra("user", sender);
                                                 startActivity(ReOpenContext);
+
+                                                break;
                                             }
                                         }
                                     }
+                                    break;
                                 }
-                                else
-                                {
+                                else {
                                     Toast.makeText(getApplicationContext(),"Error in updating receivers data",Toast.LENGTH_LONG);
                                 }
                             }
