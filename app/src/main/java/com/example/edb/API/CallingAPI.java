@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.edb.Controller.LoginActivity;
 import com.example.edb.Controller.MainActivity;
+import com.example.edb.Model.Transaction;
 import com.example.edb.Model.User;
 
 import java.util.HashMap;
@@ -21,11 +22,42 @@ import retrofit2.http.Path;
 
 public class CallingAPI {
     User user;
-    String cloudDbUrl = ApiUrl.serverUrl;
+    String cloudDbUrl;
+    Retrofit retrofit  ;
+    ApiInterface apiInterface ;
 
+    public CallingAPI(){
+        cloudDbUrl = ApiUrl.serverUrl;
+        retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
+        apiInterface = retrofit.create(ApiInterface.class);
+    }
 
-
-    public  void updateBalance(String userSSN, String accountId,  HashMap<String,String>map){
+    public User login(String email, String password){
+        HashMap<String,String>userData=new HashMap<>();
+        userData.put("Email",email);
+        userData.put("Password",password);
+        System.out.println("-----------------------------------");
+        System.out.println(userData.size());
+        Call<User>call=apiInterface.getUserInfoAndLogin(userData);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                System.out.println("Response code: "+response.code());
+                if(response.code()==200){
+                    user=response.body();
+                }
+                else{
+                    System.out.println("Wrong Email or Password");
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                System.out.println("Error at login");
+            }
+        });
+        return user;
+    }
+    public void updateBalance(String userSSN, String accountId,  HashMap<String,String>map){
         Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         Call<Void> call = apiInterface.updateBalance(userSSN,accountId,map);
@@ -36,7 +68,6 @@ public class CallingAPI {
                 if(response.isSuccessful()){
                     System.out.println("Update Balance is Done ::)");
                 }
-
             }
 
             @Override
@@ -69,5 +100,25 @@ public class CallingAPI {
             }
         });
         return user;
+    }
+
+    public void addTransaction(String userSSN, String accountID, Transaction transactionToAdd){
+        Call<Void> call = apiInterface.addTransaction(userSSN,accountID,transactionToAdd);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    System.out.println("Transaction is added Successfully");
+                }
+                else {
+                    System.out.println("Failed to add transaction");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("Error at Internet Connection");
+            }
+        });
     }
 }
