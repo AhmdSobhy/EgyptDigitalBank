@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 i.putExtra("user", user);
                 startActivity(i);
             }
-        }, 5000);
+        }, 10000);
     }
 
     void loginWithFingerprint() {
