@@ -47,6 +47,10 @@ public class Transaction implements Serializable {
         this.Date=date;
     }
 
+    public Transaction() {
+
+    }
+
     public String getType() {
         return Type;
     }
