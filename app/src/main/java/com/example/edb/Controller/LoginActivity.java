@@ -75,21 +75,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void loginFromAPI(String email, String password) {
-        CallingAPI callingAPI=new CallingAPI();
-        callingAPI.login(email,password);
+        try{
+            CallingAPI callingAPI=new CallingAPI();
+            callingAPI.login(email,password);
 
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                User user=UserMapping.user;
-                sharedPreferences.edit().putString("email", user.getEmail()).commit();
-                sharedPreferences.edit().putString("password", user.getPassword()).commit();
-                System.out.println(user.getEmail());
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                i.putExtra("user", user);
-                startActivity(i);
-            }
-        }, 10000);
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    User user=UserMapping.user;
+                    sharedPreferences.edit().putString("email", user.getEmail()).commit();
+                    sharedPreferences.edit().putString("password", user.getPassword()).commit();
+                    System.out.println(user.getEmail());
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    i.putExtra("user", user);
+                    startActivity(i);
+                }
+            }, 10000);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     void loginWithFingerprint() {
