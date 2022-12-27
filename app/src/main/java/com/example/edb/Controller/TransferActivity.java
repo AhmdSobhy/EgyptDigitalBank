@@ -13,6 +13,7 @@ import com.example.edb.API.ApiInterface;
 import com.example.edb.API.ApiUrl;
 import com.example.edb.API.CallingAPI;
 import com.example.edb.API.*;
+import com.example.edb.Model.Transaction;
 import com.example.edb.R;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,7 +21,9 @@ import android.widget.Toast;
 import com.example.edb.Model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import okio.Timeout;
@@ -49,7 +52,6 @@ public class TransferActivity extends AppCompatActivity {
         EditText receiverAccNum = findViewById(R.id.receiver_acc_txt);
         EditText amount = findViewById(R.id.amount_txt);
         Button transferBtn = findViewById(R.id.transfer_btn);
-        Intent intent = getIntent();
         sender = UserMapping.user;
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.menu_transfer);
@@ -95,6 +97,14 @@ public class TransferActivity extends AppCompatActivity {
                 Retrofit retrofitUser = new Retrofit.Builder().baseUrl(ApiUrl.serverUrl).addConverterFactory(GsonConverterFactory.create()).build();
                 ApiInterface apiInterfaceUser = retrofitUser.create(ApiInterface.class);
                 Call<User> callReceiverGetUser = apiInterfaceUser.getUserByAccountId(recAccID);
+                CallingAPI callingAPI=new CallingAPI();
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
+                Date date = new Date();
+
+                Transaction transaction= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "Tranfer to account no: "+receiverAccNum,(formatter.format(date)));
+
+
 
                 callReceiverGetUser.enqueue(new Callback<User>() {
                     @Override
@@ -105,18 +115,25 @@ public class TransferActivity extends AppCompatActivity {
                             for (int j = 0; j < Receiver.getAccounts().size(); j++) {
                                 // update receiver's balance
                                 if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
+                                    addTransaction(Receiver.getSSN(),RecevierID,transaction);
+
                                     newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
                                     dbTransfer.updateBalance(Receiver.getSSN(),Receiver.getAccounts().get(j).get_id(),String.valueOf(newBalanceR));
 
+
+
                                     for (int i = 0; i < sender.getAccounts().size(); i++) {
                                         if (senderAccountID.equals(sender.getAccounts().get(i).get_id())) {
-                                            if (sender.getAccounts().get(i).getBalance()>=Float.parseFloat(amount.getText().toString()))
-                                            { //update sender's balance
+                                            if (sender.getAccounts().get(i).getBalance()>=Float.parseFloat(amount.getText().toString())) { //update sender's balance
                                                 newBalanceS = sender.getAccounts().get(i).getBalance() - Float.parseFloat(amount.getText().toString());
                                                 sender.getAccounts().get(i).setBalance(newBalanceS);
                                                 dbTransfer.updateBalance(sender.getSSN(), sender.getAccounts().get(i).get_id(),String.valueOf(newBalanceS) );
+                                                transaction.setDescription("transaction from "+sender.getFullName());
+                                                addTransaction(Receiver.getSSN(),RecevierID,transaction);
+
                                                 Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
                                                 Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
+
                                                 ReOpenContext.putExtra("user", sender);
                                                 startActivity(ReOpenContext);
 
@@ -148,5 +165,10 @@ public class TransferActivity extends AppCompatActivity {
 
         });
 
+    }
+
+
+    private void addTransaction(String userSSN, String accountId, Transaction transaction){
+        dbTransfer.addTransaction(userSSN,accountId,transaction);
     }
 }
