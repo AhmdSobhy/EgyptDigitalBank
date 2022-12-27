@@ -124,8 +124,11 @@ public class ATMFragment extends Fragment {
     }
 
     private void confirmTransaction(String accountId, float amount) {
+        Transaction transactionToSend=new Transaction();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
+        Date date = new Date();
+        String description="";
         try {
-            String description="";
             // for loop to get the index of the chosen account to get it's balance
             for (Account acc:user.getAccounts()) {
                 if (accountId.equals(acc.get_id())) {
@@ -145,20 +148,20 @@ public class ATMFragment extends Fragment {
                         }
                     }
                     acc.setBalance(newBalance);
+                    transactionToSend=new Transaction(transactionType, amount,description,(formatter.format(date)));
+                    acc.addTransaction(transactionToSend);
                     break;
                 }
             }
 
             CallingAPI callingAPI=new CallingAPI();
             callingAPI.updateBalance(user.getSSN(),accountId, String.valueOf(newBalance));
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
-            Date date = new Date();
-            Transaction transactionToSend=new Transaction(transactionType, amount,description,(formatter.format(date)));
-
             final Handler handler = new Handler(Looper.getMainLooper());
+            String finalDescription = description;
             handler.postDelayed(new Runnable() {
                 public void run() {
-                    callingAPI.addTransaction(user.getSSN(),accountId,transactionToSend);
+                    callingAPI.addTransaction(user.getSSN(),accountId,new Transaction(transactionType, amount, finalDescription,(formatter.format(date))) );
+                    UserMapping.user=user;
                 }
             }, 5000);
         }
