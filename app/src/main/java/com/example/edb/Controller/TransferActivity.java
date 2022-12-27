@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -102,7 +104,7 @@ public class TransferActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
                 Date date = new Date();
 
-                Transaction transaction= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "Tranfer to account no: "+receiverAccNum,(formatter.format(date)));
+                Transaction transaction= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "Transfer to account no: "+receiverAccNum,(formatter.format(date)));
 
 
 
@@ -115,7 +117,13 @@ public class TransferActivity extends AppCompatActivity {
                             for (int j = 0; j < Receiver.getAccounts().size(); j++) {
                                 // update receiver's balance
                                 if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
-                                    addTransaction(Receiver.getSSN(),RecevierID,transaction);
+
+                                    final Handler handler = new Handler(Looper.getMainLooper());
+                                    handler.postDelayed(new Runnable() {
+                                        public void run() {
+                                            addTransaction(Receiver.getSSN(),RecevierID,transaction);
+                                        }
+                                    },1000);
 
                                     newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
                                     dbTransfer.updateBalance(Receiver.getSSN(),Receiver.getAccounts().get(j).get_id(),String.valueOf(newBalanceR));
@@ -128,14 +136,19 @@ public class TransferActivity extends AppCompatActivity {
                                                 newBalanceS = sender.getAccounts().get(i).getBalance() - Float.parseFloat(amount.getText().toString());
                                                 sender.getAccounts().get(i).setBalance(newBalanceS);
                                                 dbTransfer.updateBalance(sender.getSSN(), sender.getAccounts().get(i).get_id(),String.valueOf(newBalanceS) );
-                                                transaction.setDescription("transaction from "+sender.getFullName());
-                                                addTransaction(Receiver.getSSN(),RecevierID,transaction);
 
-                                                Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
-                                                Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
+                                                handler.postDelayed(new Runnable() {
+                                                    public void run() {
+                                                        transaction.setDescription("transaction from "+sender.getFullName());
+                                                        addTransaction(Receiver.getSSN(),RecevierID,transaction);
 
-                                                ReOpenContext.putExtra("user", sender);
-                                                startActivity(ReOpenContext);
+                                                        Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
+                                                        Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
+
+                                                        ReOpenContext.putExtra("user", sender);
+                                                        startActivity(ReOpenContext);
+                                                    }
+                                                },1000);
 
                                                 break;
                                             }
@@ -166,7 +179,6 @@ public class TransferActivity extends AppCompatActivity {
         });
 
     }
-
 
     private void addTransaction(String userSSN, String accountId, Transaction transaction){
         dbTransfer.addTransaction(userSSN,accountId,transaction);
