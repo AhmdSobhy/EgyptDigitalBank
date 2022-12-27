@@ -91,8 +91,6 @@ public class TransferActivity extends AppCompatActivity {
                 String recAccID= receiverAccNum.getText().toString();
                 String senderAccountID = senderAutoComplete.getText().toString();
                 String RecevierID = receiverAccNum.getText().toString();
-                HashMap<String, String> balancemapS = new HashMap<>();
-                HashMap<String, String> balancemapR = new HashMap<>();
                 Retrofit retrofitUser = new Retrofit.Builder().baseUrl(apiUri.cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
                 ApiInterface apiInterfaceUser = retrofitUser.create(ApiInterface.class);
                 Call<User> callReceiverGetUser = apiInterfaceUser.getUserByAccountId(recAccID);
@@ -106,20 +104,20 @@ public class TransferActivity extends AppCompatActivity {
                         // update receiver's balance
                         if (RecevierID.equals(Receiver.getAccounts().get(j).get_id())) {
                             newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
-                            balancemapR.put("Balance", String.valueOf(newBalanceR));
-                            dbTransfer.UpdateCall(Receiver,balancemapR,j, newBalanceR);
+                            dbTransfer.UpdateCall(Receiver,String.valueOf(newBalanceR),j);
 
                             for (int i = 0; i < sender.getAccounts().size(); i++) {
                                 if (senderAccountID.equals(sender.getAccounts().get(i).get_id())) {
-                                //update sender's balance
-                                    newBalanceS = sender.getAccounts().get(i).getBalance() - Float.parseFloat(amount.getText().toString());
-                                    sender.getAccounts().get(i).setBalance(newBalanceS);
-                                    balancemapS.put("Balance", String.valueOf(newBalanceS));
-                                    dbTransfer.UpdateCall(sender,balancemapS,i, Float.parseFloat(amount.getText().toString()));
-                                    Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
-                                    Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
-                                    ReOpenContext.putExtra("user",sender);
-                                    startActivity(ReOpenContext);
+                                    if (sender.getAccounts().get(i).getBalance()>=Float.parseFloat(amount.getText().toString()))
+                                    { //update sender's balance
+                                        newBalanceS = sender.getAccounts().get(i).getBalance() - Float.parseFloat(amount.getText().toString());
+                                        sender.getAccounts().get(i).setBalance(newBalanceS);
+                                        dbTransfer.UpdateCall(sender, String.valueOf(newBalanceS), i);
+                                        Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
+                                        Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
+                                        ReOpenContext.putExtra("user", sender);
+                                        startActivity(ReOpenContext);
+                                    }
                                 }
                            }
                         }

@@ -47,15 +47,19 @@ public class DbHelperTransferMoney {
     /*
      *  UPDATE REQUEST CALL
      * */
-    public void UpdateCall (User user, HashMap<String,String>balance, int index, Float amount)
+    public void UpdateCall (User user, String balance, int index)
     {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(apiUri.cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        Call<Void> updateBalance = apiInterface.updateBalance(user.getSSN(), user.getAccounts().get(index).get_id(),balance );
+        HashMap<String, String> balancemap = new HashMap<>();
+        balancemap.put("Balance", String.valueOf(balance));
+        Call<Void> updateBalance = apiInterface.updateBalance(user.getSSN(), user.getAccounts().get(index).get_id(),balancemap );
+
         updateBalance.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (user.getAccounts().get(index).getBalance() >= amount) {
+               if(response.isSuccessful())
+               {
                     updateCall = true;
                 }
                 else
