@@ -31,8 +31,8 @@ public interface  ApiInterface {
     @POST("add-user")
     Call<User> addUser(@Body User user);
 
-    @POST("add-transaction")
-    Call<User> addTransaction(@Body User user);
+    @POST("add-transaction/{userSSN}/{accountID}")
+    Call<User> addTransaction(@Path("userSSN") String userSSN, @Path("accountID")String accountId, @Body Transaction transaction);
 
     @PATCH("update-balance/{userSSN}/{accountId}")
     Call<Void> updateBalance(@Path("userSSN") String userSSN, @Path("accountId")String accountId, @Body HashMap<String,String>map);
@@ -45,8 +45,10 @@ public interface  ApiInterface {
 
     @GET("/isValid/AccountNo/{accountID}")
     Call<Void> isExistAccountId(@Path("accountID") String accountID);
+
     @GET("add-transaction")
     Call<List<Transaction>> getTransactions(@Query("SSN") String SSN);
+
     @GET("/users/Accounts/{accountID}")
     Call<User> getUserByAccountId(@Path("accountID") String accountId);
 
