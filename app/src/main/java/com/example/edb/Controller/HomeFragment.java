@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements AccountCardAdapter.OnItemClickListener {
     private AccountCardAdapter accountAdapter;
     private static ArrayList<Account> accountsData;
-    User user;
+    User user = UserMapping.user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,10 +46,10 @@ public class HomeFragment extends Fragment implements AccountCardAdapter.OnItemC
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         accountsData = new ArrayList<>();
-        for (int i = 0; i < user.getAccounts().size(); i++) {
+        for (int i = 0; i < UserMapping.user.getAccounts().size(); i++) {
             accountsData.add(new Account(
-                    user.getAccounts().get(i).get_id(),
-                    user.getAccounts().get(i).getBalance()
+                    UserMapping.user.getAccounts().get(i).get_id(),
+                    UserMapping.user.getAccounts().get(i).getBalance()
             ));
         }
 

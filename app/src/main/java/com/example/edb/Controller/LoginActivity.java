@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, @NonNull Response<User> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(LoginActivity.this, "You have log in successfully ::)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "You have log in successfully ::)", Toast.LENGTH_SHORT).show();
                     User user = response.body();
                     UserMapping.user = user;
                     sharedPreferences.edit().putString("email", user.getEmail()).commit();

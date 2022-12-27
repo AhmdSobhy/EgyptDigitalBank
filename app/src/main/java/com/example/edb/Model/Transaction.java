@@ -33,6 +33,12 @@ public class Transaction implements Serializable {
         this.Type = transactionType;
         this.description = transactionName;
     }
+    public Transaction(String transactionDate, String transactionType, float transactionAmount, String transactionName) {
+        this.Amount = transactionAmount;
+        this.Date = transactionDate;
+        this.Type = transactionType;
+        this.description = transactionName;
+    }
 
     public String getType() {
         return Type;

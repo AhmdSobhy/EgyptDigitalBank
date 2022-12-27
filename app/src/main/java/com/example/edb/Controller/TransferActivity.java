@@ -1,5 +1,4 @@
 package com.example.edb.Controller;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,25 +7,16 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import com.example.edb.API.ApiInterface;
 import com.example.edb.API.CallingAPI;
 import com.example.edb.Model.Account;
 import com.example.edb.R;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.edb.Model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TransferActivity extends AppCompatActivity {
     User sender;
@@ -44,7 +34,7 @@ public class TransferActivity extends AppCompatActivity {
         EditText senderAccNum = findViewById(R.id.sender_acc_txt);
         EditText receiverAccNum = findViewById(R.id.receiver_acc_txt);
         EditText amount = findViewById(R.id.amount_txt);
-        Button transferBtn = findViewById(R.id.transfer_btn);
+        Button transferBtn = findViewById(R.id.confirm_btn);
         Intent intent = getIntent();
         sender = (User) intent.getSerializableExtra("user");
         bottomNavigationView = findViewById(R.id.bottom_nav);

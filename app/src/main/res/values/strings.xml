@@ -35,4 +35,10 @@
     <string name="edb_name">EDB</string>
     <string name="biometric_login_txt">Biometric login</string>
     <string name="edb_wallet_txt">EDB Wallet</string>
+    <string name="account_txt">Account</string>
+    <string name="deposit_txt">Deposit</string>
+    <string name="confirm_txt">Confirm</string>
+    <string name="withdraw_txt">Withdraw</string>
+    <string name="transaction_completed_successfully">Transaction Completed \nSuccessfully</string>
+    <string name="thank_you">Thank You</string>
 </resources>

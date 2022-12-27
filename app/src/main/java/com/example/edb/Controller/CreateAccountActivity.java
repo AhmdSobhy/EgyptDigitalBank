@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.edb.API.ApiInterface;
+import com.example.edb.API.ApiUrl;
 import com.example.edb.Model.Account;
 import com.example.edb.Model.User;
 import com.example.edb.R;
@@ -80,7 +81,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 Account account = new Account(accountType.getText().toString(), 0, "EGY", "Active", (formatter.format(date)));
 
 
-                String cloudDbUrl = "https://bank-db-api.herokuapp.com/";
+                String cloudDbUrl = ApiUrl.serverUrl;
 
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
                 ApiInterface apiInterface = retrofit.create(ApiInterface.class);
