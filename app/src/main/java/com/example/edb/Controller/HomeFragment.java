@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.edb.Model.Account;
 import com.example.edb.Model.User;
@@ -21,8 +22,6 @@ import com.example.edb.R;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements AccountCardAdapter.OnItemClickListener {
-    private AccountCardAdapter accountAdapter;
-    private static ArrayList<Account> accountsData;
     User user = UserMapping.user;
 
     @Override
@@ -31,11 +30,10 @@ public class HomeFragment extends Fragment implements AccountCardAdapter.OnItemC
 
         LinearLayout transferMoneyBtn = view.findViewById(R.id.transfer_money_btn);
         LinearLayout atmBtn = view.findViewById(R.id.atm_btn);
-        LinearLayout payBtn = view.findViewById(R.id.pay_btn);
+        LinearLayout requestsBtn = view.findViewById(R.id.requests_btn);
         LinearLayout payCreditBtn = view.findViewById(R.id.pay_credit_btn);
 
-        //myOnClickListener = new MyOnClickListener();
-        Intent intent = getActivity().getIntent();
+        Intent intent = requireActivity().getIntent(); // ......
         user = (User) intent.getSerializableExtra("user");
 
         RecyclerView recyclerView = view.findViewById(R.id.acc_cards_recyclerview);
@@ -45,7 +43,7 @@ public class HomeFragment extends Fragment implements AccountCardAdapter.OnItemC
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        accountsData = new ArrayList<>();
+        ArrayList<Account> accountsData = new ArrayList<>();
         for (int i = 0; i < UserMapping.user.getAccounts().size(); i++) {
             accountsData.add(new Account(
                     UserMapping.user.getAccounts().get(i).get_id(),
@@ -55,27 +53,30 @@ public class HomeFragment extends Fragment implements AccountCardAdapter.OnItemC
             ));
         }
 
-        accountAdapter = new AccountCardAdapter(getContext(), accountsData);
+        AccountCardAdapter accountAdapter = new AccountCardAdapter(getContext(), accountsData);
         recyclerView.setAdapter(accountAdapter);
         accountAdapter.setOnItemClickListener(HomeFragment.this);
 
-        transferMoneyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getContext(), TransferActivity.class);
-                i.putExtra("user",user);
-                startActivity(i);
-            }
+        transferMoneyBtn.setOnClickListener(transferView -> {
+            Intent i = new Intent(getContext(), TransferActivity.class);
+            i.putExtra("user",user);
+            startActivity(i);
         });
 
-        atmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container,new ATMFragment());
-                fragmentTransaction.addToBackStack("HomeFragment");
-                fragmentTransaction.commit();
-            }
+        requestsBtn.setOnClickListener(requestsView -> {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container,new RequestsFragment());
+            fragmentTransaction.addToBackStack("HomeFragment");
+            fragmentTransaction.commit();
+        });
+
+        payCreditBtn.setOnClickListener(payCreditView -> Toast.makeText(getContext(),"No Credit Card on This Account", Toast.LENGTH_SHORT).show());
+
+        atmBtn.setOnClickListener(atmView -> {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container,new ATMFragment());
+            fragmentTransaction.addToBackStack("HomeFragment");
+            fragmentTransaction.commit();
         });
 
         return view;

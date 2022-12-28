@@ -26,45 +26,43 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import retrofit2.Call;
-
 public class ATMFragment extends Fragment {
 
     LinearLayout trTypeLayout;
     LinearLayout transactionLayout;
     LinearLayout confirmationLayout;
+    LinearLayout processingLayout;
     LinearLayout errorLayout;
+    AutoCompleteTextView accAutoComplete;
+    EditText amountTxt;
     static String transactionType;
     User user = UserMapping.user;
-    private ArrayList<String> accountID;
-    private ArrayAdapter<String> accountArrayAdapter;
-    int indexOfAccount=0;
     float newBalance =0;
-    Call<Void> callUpdateAccount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_atm, container, false);
         trTypeLayout = view.findViewById(R.id.transaction_type_layout);
         transactionLayout = view.findViewById(R.id.transaction_layout);
+        processingLayout = view.findViewById(R.id.processing_layout);
         confirmationLayout = view.findViewById(R.id.confirmation_layout);
         errorLayout = view.findViewById(R.id.error_layout);
+        accAutoComplete = view.findViewById(R.id.acc_txt);
+        amountTxt = view.findViewById(R.id.amount_txt);
         Button depositBtn = view.findViewById(R.id.deposit_btn);
         Button withdrawBtn = view.findViewById(R.id.withdraw_btn);
-        AutoCompleteTextView accAutoComplete = view.findViewById(R.id.acc_txt);
-        EditText amountTxt = view.findViewById(R.id.amount_txt);
         Button backBtn = view.findViewById(R.id.back_btn);
         Button confirmBtn = view.findViewById(R.id.confirm_btn);
 
         // Getting all the accounts for the user
         try {
-            accountID = new ArrayList<>();
+            ArrayList<String> accountID = new ArrayList<>();
             for (int i = 0; i < user.getAccounts().size(); i++) {
 
                 accountID.add(user.getAccounts().get(i).get_id());
             }
             // adding them to the Accounts (autocomplete)
-            accountArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, accountID);
+            ArrayAdapter<String> accountArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item, accountID);
             accAutoComplete.setAdapter(accountArrayAdapter);
             //temp check
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  " + user.getAccounts().get(1).getBalance());
@@ -73,58 +71,48 @@ public class ATMFragment extends Fragment {
             e.printStackTrace();
         }
 
-        depositBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                trTypeLayout.setVisibility(View.GONE);
-                transactionLayout.setVisibility(View.VISIBLE);
-                transactionType = depositBtn.getText().toString();
-            }
+        depositBtn.setOnClickListener(view1 -> {
+            trTypeLayout.setVisibility(View.GONE);
+            transactionLayout.setVisibility(View.VISIBLE);
+            transactionType = depositBtn.getText().toString();
         });
 
-        withdrawBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                trTypeLayout.setVisibility(View.GONE);
-                transactionLayout.setVisibility(View.VISIBLE);
-                transactionType = withdrawBtn.getText().toString();
-            }
+        withdrawBtn.setOnClickListener(view12 -> {
+            trTypeLayout.setVisibility(View.GONE);
+            transactionLayout.setVisibility(View.VISIBLE);
+            transactionType = withdrawBtn.getText().toString();
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                transactionLayout.setVisibility(View.GONE);
-                trTypeLayout.setVisibility(View.VISIBLE);
-                transactionType = withdrawBtn.getText().toString();
-            }
+        backBtn.setOnClickListener(view13 -> {
+            transactionLayout.setVisibility(View.GONE);
+            trTypeLayout.setVisibility(View.VISIBLE);
+            transactionType = withdrawBtn.getText().toString();
         });
 
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String account = accAutoComplete.getText().toString();
-                String amount = amountTxt.getText().toString();
-                if (!account.isEmpty() && !amount.isEmpty()) {
-                    confirmTransaction(account, Float.parseFloat(amount));
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            confirmationLayout.setVisibility(View.GONE);
-                            errorLayout.setVisibility(View.GONE);
-                            trTypeLayout.setVisibility(View.VISIBLE);
-                        }
-                    }, 4000);
+        confirmBtn.setOnClickListener(view14 -> {
+            String account = accAutoComplete.getText().toString();
+            String amount = amountTxt.getText().toString();
+            if (!account.isEmpty() && !amount.isEmpty()) {
+                confirmTransaction(account, Float.parseFloat(amount));
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    transactionLayout.setVisibility(View.GONE);
+                    processingLayout.setVisibility(View.GONE);
+                    confirmationLayout.setVisibility(View.GONE);
+                    errorLayout.setVisibility(View.GONE);
+                    trTypeLayout.setVisibility(View.VISIBLE);
+                }, 13000);
 
-                } else
-                    Toast.makeText(getContext(), "Invalid Account or Amount", Toast.LENGTH_SHORT).show();
-            }
+            } else
+                Toast.makeText(getContext(), "Invalid Account or Amount", Toast.LENGTH_SHORT).show();
         });
         return view;
     }
 
     private void confirmTransaction(String accountId, float amount) {
         try {
+            transactionLayout.setVisibility(View.GONE);
+            processingLayout.setVisibility(View.VISIBLE);
             String description="";
             // for loop to get the index of the chosen account to get it's balance
             for (Account acc:user.getAccounts()) {
@@ -156,19 +144,22 @@ public class ATMFragment extends Fragment {
             Transaction transactionToSend=new Transaction(transactionType, amount,description,(formatter.format(date)));
 
             final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    callingAPI.addTransaction(user.getSSN(),accountId,transactionToSend);
-                }
-            },3000 );
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    UserMapping.user=callingAPI.login(user.getEmail(),user.getPassword());
-                }
-            }, 10000);
+            handler.postDelayed(() -> callingAPI.addTransaction(user.getSSN(),accountId,transactionToSend),3000 );
+            handler.postDelayed(() -> {
+                UserMapping.user=callingAPI.login(user.getEmail(),user.getPassword());
+                accAutoComplete.setText("");
+                amountTxt.setText("");
+                processingLayout.setVisibility(View.GONE);
+                confirmationLayout.setVisibility(View.VISIBLE);
+            },10000);
+
+
         }
         catch(Exception e) {
             System.out.println("problem with creating call (getUserAccountId)");
+            transactionLayout.setVisibility(View.GONE);
+            processingLayout.setVisibility(View.GONE);
+            errorLayout.setVisibility(View.VISIBLE);
         }
     }
 

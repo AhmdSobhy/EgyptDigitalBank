@@ -1,7 +1,5 @@
 package com.example.edb.Controller;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,25 +8,24 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.edb.API.ApiInterface;
 import com.example.edb.API.ApiUrl;
 import com.example.edb.API.CallingAPI;
-import com.example.edb.API.*;
+import com.example.edb.Controller.UserMapping;
 import com.example.edb.Model.Transaction;
-import com.example.edb.R;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import com.example.edb.Model.User;
+import com.example.edb.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
-import okio.Timeout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -139,7 +136,7 @@ public class TransferActivity extends AppCompatActivity {
                                                 dbTransfer.updateBalance(sender.getSSN(), sender.getAccounts().get(i).get_id(),String.valueOf(newBalanceS) );
 
 
-                                               // transaction.setDescription("transaction from "+sender.getFullName());
+                                                // transaction.setDescription("transaction from "+sender.getFullName());
                                                 addTransaction(Receiver.getSSN(),RecevierID,transaction2);
 
                                                 Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();

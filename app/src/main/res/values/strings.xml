@@ -5,7 +5,7 @@
     <string name="withdraw_btn_txt">Virtual\nATM</string>
     <string name="custom_btn_txt_size">15dp</string>
     <string name="pay_credit_btn_txt">Pay\nCredit Card</string>
-    <string name="pay_btn_txt">Pay\nYour Bills</string>
+    <string name="pay_btn_txt">Your\nRequests</string>
     <string name="create_new_acc_txt">Create New Account</string>
     <string name="full_name_txt">Full Name</string>
     <string name="address_txt">Address</string>
@@ -51,4 +51,13 @@
     <string name="menu_transfer_txt">Transfer</string>
     <string name="menu_profile_txt">Profile</string>
     <string name="profile_information">Profile Information</string>
+    <string name="already_have_an_account">already have an account?</string>
+    <string name="quick_links">Quick Links</string>
+    <string name="loading_txt">◌</string>
+    <string name="processing_transaction">Processing Transaction...</string>
+    <string name="transaction_failed">Transaction Failed</string>
+    <string name="error">Error</string>
+    <string name="amount">Amount</string>
+    <string name="virtual_atm">Virtual ATM</string>
+    <string name="back_btn">〈 Back</string>
 </resources>

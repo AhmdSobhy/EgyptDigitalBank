@@ -48,6 +48,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         Button createAccBtn = findViewById(R.id.create_acc_btn);
         AutoCompleteTextView genderType = findViewById(R.id.gender_txt);
         AutoCompleteTextView accountType = findViewById(R.id.acc_type_txt);
+        Button loginBtn = findViewById(R.id.activity_login_btn);
 
         String[] gender = {"Male", "Female"};
         String[] items = {"Saving", "Current"};
@@ -143,6 +144,13 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
 
-
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 }

@@ -40,6 +40,7 @@ MainActivity extends AppCompatActivity {
                 case R.id.menu_transfer:
                     startActivity(new Intent(getApplicationContext(), TransferActivity.class));
                     overridePendingTransition(0,0);
+                    return true;
                 case R.id.menu_profile:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack("HomeFragment").commit();
                     return true;

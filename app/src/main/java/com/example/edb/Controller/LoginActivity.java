@@ -51,27 +51,23 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("userdata", MODE_PRIVATE);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginFromAPI(emailTxt.getText().toString(), passwordTxt.getText().toString());
-            }
-        });
+        loginBtn.setOnClickListener(view -> loginFromAPI(emailTxt.getText().toString(), passwordTxt.getText().toString()));
 
-        fingerprintLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginWithFingerprint();
-            }
-        });
+        fingerprintLoginBtn.setOnClickListener(view -> loginWithFingerprint());
 
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LoginActivity.this, CreateAccountActivity.class);
                 startActivity(i);
+                finish();
             }
         });
+
+    }
+    @Override
+    public void onBackPressed(){
+
     }
 
     void loginFromAPI(String email, String password) {
@@ -80,18 +76,17 @@ public class LoginActivity extends AppCompatActivity {
             callingAPI.login(email,password);
 
             final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    User user=UserMapping.user;
-                    assert (user!=null);
-                    sharedPreferences.edit().putString("email", user.getEmail()).commit();
-                    sharedPreferences.edit().putString("password", user.getPassword()).commit();
-                    System.out.println(user.getEmail());
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    i.putExtra("user", user);
-                    startActivity(i);
-                }
-            }, 10000);
+            handler.postDelayed(() -> {
+                User user=UserMapping.user;
+                assert (user!=null);
+                sharedPreferences.edit().putString("email", user.getEmail()).apply();
+                sharedPreferences.edit().putString("password", user.getPassword()).apply();
+                System.out.println(user.getEmail());
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                i.putExtra("user", user);
+                startActivity(i);
+                finish(); // kill LoginActivity after navigation to MainActivity
+            }, 9000);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -111,7 +106,12 @@ public class LoginActivity extends AppCompatActivity {
                 break;
 
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+            case BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED:
+            case BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED:
+            case BiometricManager.BIOMETRIC_STATUS_UNKNOWN:
                 Toast.makeText(getApplicationContext(), "No fingerprint registered", Toast.LENGTH_SHORT).show();
+                break;
+            case BiometricManager.BIOMETRIC_SUCCESS:
                 break;
         }
 

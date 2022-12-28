@@ -21,269 +21,286 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.97" />
 
-    <TextView
-        android:id="@+id/quick_lbl"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="20dp"
-        android:padding="10dp"
-        android:text="Quick Links"
-        android:textSize="17dp"
-        app:layout_constraintStart_toStartOf="@id/start_guideline"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
-        android:columnCount="2"
-        android:padding="12dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
-        app:layout_constraintTop_toTopOf="@id/quick_lbl">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/transfer_money_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/quick_lbl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="10dp"
+            android:text="@string/quick_links"
+            android:textSize="17sp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1">
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="2">
 
-                <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/round_corners">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="3dp"
-                        android:src="@drawable/bg_btn_icon"
-                        app:tint="#fff" />
-
-                    <RelativeLayout
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="17dp"
-                        android:layout_marginStart="6dp"
-                        android:background="@drawable/bg_btn_icon">
-
-                        <ImageView
-                            android:id="@+id/transfer_btn_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_transfer_96"
-                            app:tint="@color/navy" />
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/transfer_btn_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="17dp"
-                        android:layout_marginEnd="40dp"
-                        android:gravity="bottom"
-                        android:text="@string/transfer_money_btn_txt"
-                        android:textColor="@color/navy"
-                        android:textSize="16dp" />
-                </RelativeLayout>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pay_btn"
-            android:layout_width="158dp"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1">
+            <!--Transfer Money Button-->
+            <LinearLayout
+                android:id="@+id/transfer_money_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/round_corners">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="3dp"
-                        android:src="@drawable/bg_btn_icon"
-                        app:tint="#fff" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
 
                     <RelativeLayout
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="17dp"
-                        android:layout_marginStart="6dp"
-                        android:background="@drawable/bg_btn_icon">
+                        android:layout_width="158dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/round_corners">
 
                         <ImageView
-                            android:id="@+id/pay_btn_icon"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_cash_in_hand_100"
-                            app:tint="@color/navy" />
+                            android:layout_margin="3dp"
+                            android:src="@drawable/bg_btn_icon"
+                            app:tint="#fff" />
 
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="55dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="17dp"
+                            android:layout_marginStart="6dp"
+                            android:background="@drawable/bg_btn_icon">
+
+                            <ImageView
+                                android:id="@+id/transfer_btn_icon"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_transfer_96"
+                                app:tint="@color/navy" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/transfer_btn_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="17dp"
+                            android:layout_marginEnd="40dp"
+                            android:gravity="bottom"
+                            android:text="@string/transfer_money_btn_txt"
+                            android:textColor="@color/navy"
+                            android:textSize="16dp" />
                     </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/pay_btn_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="17dp"
-                        android:gravity="bottom"
-                        android:text="@string/pay_btn_txt"
-                        android:textColor="@color/navy"
-                        android:textSize="16dp" />
                 </RelativeLayout>
-            </RelativeLayout>
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/pay_credit_btn"
-            android:layout_width="158dp"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1">
+            <!--Requests Button-->
+            <LinearLayout
+                android:id="@+id/requests_btn"
+                android:layout_width="158dp"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/round_corners">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="3dp"
-                        android:src="@drawable/bg_btn_icon"
-                        app:tint="#fff" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
 
                     <RelativeLayout
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="17dp"
-                        android:layout_marginStart="6dp"
-                        android:background="@drawable/bg_btn_icon">
+                        android:layout_width="158dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/round_corners">
 
                         <ImageView
-                            android:id="@+id/credit_btn_icon"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_mastercard_credit_card_100"
-                            app:tint="@color/navy" />
+                            android:layout_marginStart="3dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginEnd="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:src="@drawable/bg_btn_icon"
+                            app:tint="#fff" />
 
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="55dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="17dp"
+                            android:layout_marginStart="6dp"
+                            android:background="@drawable/bg_btn_icon">
+
+                            <ImageView
+                                android:id="@+id/pay_btn_icon"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_inscription"
+                                app:tint="@color/navy" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/pay_btn_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="17dp"
+                            android:layout_marginTop="17dp"
+                            android:layout_marginEnd="17dp"
+                            android:layout_marginBottom="17dp"
+                            android:gravity="bottom"
+                            android:text="@string/pay_btn_txt"
+                            android:textColor="@color/navy"
+                            android:textSize="16dp" />
                     </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/credit_btn_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="17dp"
-                        android:layout_marginEnd="40dp"
-                        android:gravity="bottom"
-                        android:text="@string/pay_credit_btn_txt"
-                        android:textColor="@color/navy"
-                        android:textSize="16dp" />
                 </RelativeLayout>
-            </RelativeLayout>
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/atm_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1">
+            <!--Pay your Credit Card Button-->
+            <LinearLayout
+                android:id="@+id/pay_credit_btn"
+                android:layout_width="158dp"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="158dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/round_corners">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="3dp"
-                        android:src="@drawable/bg_btn_icon"
-                        app:tint="#fff" />
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
 
                     <RelativeLayout
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="17dp"
-                        android:layout_marginStart="6dp"
-                        android:background="@drawable/bg_btn_icon">
+                        android:layout_width="158dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/round_corners">
 
                         <ImageView
-                            android:id="@+id/withdraw_btn_icon"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_atm_96"
-                            app:tint="@color/navy" />
+                            android:layout_margin="3dp"
+                            android:src="@drawable/bg_btn_icon"
+                            app:tint="#fff" />
 
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="55dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="17dp"
+                            android:layout_marginStart="6dp"
+                            android:background="@drawable/bg_btn_icon">
+
+                            <ImageView
+                                android:id="@+id/credit_btn_icon"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_mastercard_credit_card_100"
+                                app:tint="@color/navy" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/credit_btn_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="17dp"
+                            android:layout_marginEnd="40dp"
+                            android:gravity="bottom"
+                            android:text="@string/pay_credit_btn_txt"
+                            android:textColor="@color/navy"
+                            android:textSize="16dp" />
                     </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/withdraw_btn_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="17dp"
-                        android:layout_marginTop="17dp"
-                        android:layout_marginEnd="17dp"
-                        android:layout_marginBottom="17dp"
-                        android:gravity="bottom"
-                        android:text="@string/withdraw_btn_txt"
-                        android:textColor="@color/navy"
-                        android:textSize="16dp" />
                 </RelativeLayout>
-            </RelativeLayout>
-        </LinearLayout>
-    </GridLayout>
+            </LinearLayout>
+            <!--Virtual ATM Button-->
+            <LinearLayout
+                android:id="@+id/atm_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="158dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/round_corners">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginEnd="3dp"
+                            android:layout_marginBottom="3dp"
+                            android:src="@drawable/bg_btn_icon"
+                            app:tint="#fff" />
+
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="55dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="17dp"
+                            android:layout_marginStart="6dp"
+                            android:background="@drawable/bg_btn_icon">
+
+                            <ImageView
+                                android:id="@+id/withdraw_btn_icon"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_atm_96"
+                                app:tint="@color/navy" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/withdraw_btn_txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="17dp"
+                            android:layout_marginTop="17dp"
+                            android:layout_marginEnd="17dp"
+                            android:layout_marginBottom="17dp"
+                            android:gravity="bottom"
+                            android:text="@string/withdraw_btn_txt"
+                            android:textColor="@color/navy"
+                            android:textSize="16dp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+        </GridLayout>
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

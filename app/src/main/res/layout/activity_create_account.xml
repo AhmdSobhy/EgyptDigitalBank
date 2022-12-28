@@ -32,233 +32,292 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.97" />
 
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+    <LinearLayout
+        android:id="@+id/fields_layout"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/buttons_layout"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
         app:layout_constraintTop_toTopOf="@id/top_guideline">
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_edb_logo_small"
+            android:layout_gravity="start"
+            android:contentDescription="@string/edb_name" />
+
+        <ScrollView
+            android:id="@+id/create_acc_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="1dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/create_acc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="22dp"
+                    android:text="@string/create_new_acc_txt"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/full_name_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="21dp"
+                    android:text="@string/full_name_txt" />
+
+                <EditText
+                    android:id="@+id/full_name_txt"
+                    android:layout_width="305dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/icon_person"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="@string/full_name_txt"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp" />
+
+                <TextView
+                    android:id="@+id/address_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/address_txt" />
+
+                <EditText
+                    android:id="@+id/address_txt"
+                    android:layout_width="305dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/icon_location"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/address_txt"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp" />
+
+                <TextView
+                    android:id="@+id/gender_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender"
+                    android:layout_marginTop="10dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp"
+                    android:padding="0dp"
+                    app:startIconDrawable="@drawable/icon_gender">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/gender_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/mobile_num_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/mobile_number_txt" />
+
+                <EditText
+                    android:id="@+id/mobile_num_txt"
+                    android:layout_width="305dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/icon_phone"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/mobile_num_format"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp" />
+
+                <TextView
+                    android:id="@+id/email_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_txt" />
+
+                <EditText
+                    android:id="@+id/email_txt"
+                    android:layout_width="305dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/icon_email"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="@string/email_format"
+                    android:inputType="text"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp" />
+
+                <TextView
+                    android:id="@+id/id_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/national_id_txt" />
+
+                <EditText
+                    android:id="@+id/id_txt"
+                    android:layout_width="305dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/icon_id"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="@string/id_format"
+                    android:inputType="number"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp" />
+
+                <TextView
+                    android:id="@+id/acc_type_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account_type_txt" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/list_item"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="59dp"
+                    android:layout_marginBottom="10dp"
+                    app:startIconDrawable="@drawable/ic_rings_96">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acc_type_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/password_lbl"
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password_txt" />
+
+                <EditText
+                    android:id="@+id/password_txt"
+                    android:layout_width="305dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/icon_password"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="@string/pass_example"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp" />
+
+                <TextView
+                    android:id="@+id/re_password_lbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/re_enter_password_txt" />
+
+                <EditText
+                    android:id="@+id/re_password_txt"
+                    android:layout_width="305dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="26dp"
+                    android:background="@drawable/custom_input"
+                    android:drawableStart="@drawable/icon_password"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/fields_layout">
+
+        <Button
+            android:id="@+id/create_acc_btn"
+            android:layout_width="305dp"
+            android:layout_height="61dp"
+            android:text="@string/create_account_txt"
+            android:textColor="@color/white" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/create_acc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="32dp"
-                android:text="@string/create_new_acc_txt"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/full_name_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginTop="21dp"
-                android:text="@string/full_name_txt" />
-
-            <EditText
-                android:id="@+id/full_name_txt"
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/icon_person"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="@string/full_name_txt"
-                android:inputType="textPersonName"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="10dp" />
-
-            <TextView
-                android:id="@+id/address_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/address_txt" />
-
-            <EditText
-                android:id="@+id/address_txt"
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/icon_location"
-                android:drawablePadding="5dp"
-                android:hint="@string/address_txt"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="10dp" />
-
-            <TextView
-                android:id="@+id/gender_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gender"
-                android:layout_marginTop="10dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/icon_gender">
-
-                <AutoCompleteTextView
-                    android:id="@+id/gender_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:inputType="none" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/mobile_num_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:text="@string/mobile_number_txt" />
-
-            <EditText
-                android:id="@+id/mobile_num_txt"
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/icon_phone"
-                android:drawablePadding="5dp"
-                android:hint="@string/mobile_num_format"
-                android:ems="10"
-                android:inputType="phone"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="10dp" />
-
-            <TextView
-                android:id="@+id/email_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email_txt" />
-
-            <EditText
-                android:id="@+id/email_txt"
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/icon_email"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="@string/email_format"
-                android:inputType="text"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="10dp" />
-
-            <TextView
-                android:id="@+id/id_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/national_id_txt" />
-
-            <EditText
-                android:id="@+id/id_txt"
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/icon_id"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="@string/id_format"
-                android:inputType="number"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="10dp" />
-
-            <TextView
-                android:id="@+id/acc_type_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/account_type_txt" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/list_item"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:layout_marginBottom="10dp"
-                app:startIconDrawable="@drawable/ic_rings_96">
-
-                <AutoCompleteTextView
-                    android:id="@+id/acc_type_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:inputType="none" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/password_lbl"
-                android:layout_width="78dp"
-                android:layout_height="wrap_content"
-                android:text="@string/password_txt" />
-
-            <EditText
-                android:id="@+id/password_txt"
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/icon_password"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:hint="@string/pass_example"
-                android:inputType="textPassword"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="10dp" />
-
-            <TextView
-                android:id="@+id/re_password_lbl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/re_enter_password_txt" />
-
-            <EditText
-                android:id="@+id/re_password_txt"
-                android:layout_width="305dp"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="47dp"
-                android:background="@drawable/custom_input"
-                android:drawableStart="@drawable/icon_password"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="10dp" />
+                android:layout_marginStart="30dp"
+                android:text="@string/already_have_an_account"
+                android:textColor="@color/royal_blue" />
 
             <Button
-                android:id="@+id/create_acc_btn"
-                android:layout_width="305dp"
-                android:layout_height="61dp"
-                android:layout_marginBottom="77dp"
-                android:text="@string/create_account_txt"
-                android:textColor="@color/white" />
-
+                android:id="@+id/activity_login_btn"
+                android:layout_width="143dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-40dp"
+                android:background="@color/transparent"
+                android:padding="0dp"
+                android:text="@string/login_txt"
+                android:textAllCaps="false"
+                android:textColor="@color/navy"
+                android:textSize="14sp" />
         </LinearLayout>
-    </ScrollView>
-
-
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
