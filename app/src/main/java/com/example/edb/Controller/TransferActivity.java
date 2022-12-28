@@ -101,8 +101,8 @@ public class TransferActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
                 Date date = new Date();
 
-                Transaction transaction= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "Transfer to account no: "+receiverAccNum.getText().toString(),(formatter.format(date)));
-                Transaction transaction2= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "from "+senderAccountID,(formatter.format(date)));
+                Transaction transaction= new Transaction("withdraw",Float.parseFloat(amount.getText().toString()), "Transfer to account no: "+receiverAccNum.getText().toString(),(formatter.format(date)));
+                Transaction transaction2= new Transaction("deposit",Float.parseFloat(amount.getText().toString()), "from "+senderAccountID,(formatter.format(date)));
 
 
 
@@ -137,7 +137,12 @@ public class TransferActivity extends AppCompatActivity {
 
 
                                                 // transaction.setDescription("transaction from "+sender.getFullName());
-                                                addTransaction(Receiver.getSSN(),RecevierID,transaction2);
+                                                handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        addTransaction(Receiver.getSSN(),RecevierID,transaction2);
+                                                    }
+                                                },3000);
 
                                                 Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
                                                 Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
@@ -162,6 +167,10 @@ public class TransferActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(),"Error in updating receivers data",Toast.LENGTH_LONG);
                                 }
                             }
+                        }
+                        else{
+                            //wrong account ID
+                            Toast.makeText(getApplicationContext(),"Wrong Account ID",Toast.LENGTH_LONG).show();
                         }
 
                     }
