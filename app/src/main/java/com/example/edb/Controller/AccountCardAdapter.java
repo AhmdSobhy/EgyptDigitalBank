@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,14 +32,14 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
         TextView accountNumText;
         TextView currencyText;
         TextView balanceText;
-        ImageView accountIcon;
+        TextView accountType;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.accountNumText = itemView.findViewById(R.id.account_num_txt);
             this.currencyText = itemView.findViewById(R.id.currency_txt);
             this.balanceText = itemView.findViewById(R.id.balance_txt);
-            this.accountIcon = itemView.findViewById(R.id.account_image);
+            this.accountType = itemView.findViewById(R.id.acc_type);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,7 +71,7 @@ public class AccountCardAdapter extends RecyclerView.Adapter<AccountCardAdapter.
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
         holder.accountNumText.setText(dataSet.get(listPosition).getAccountNumber());
         holder.balanceText.setText(String.valueOf(dataSet.get(listPosition).getBalance()));
-        holder.accountIcon.setImageResource(R.drawable.ic_mastercard_logo_192);
+        holder.accountType.setText(dataSet.get(listPosition).getType());
     }
 
     @Override

@@ -49,7 +49,9 @@ public class HomeFragment extends Fragment implements AccountCardAdapter.OnItemC
         for (int i = 0; i < UserMapping.user.getAccounts().size(); i++) {
             accountsData.add(new Account(
                     UserMapping.user.getAccounts().get(i).get_id(),
-                    UserMapping.user.getAccounts().get(i).getBalance()
+                    UserMapping.user.getAccounts().get(i).getBalance(),
+                    UserMapping.user.getAccounts().get(i).getType()
+
             ));
         }
 

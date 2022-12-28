@@ -38,9 +38,10 @@ public class Account implements Serializable {
     private String accountNumber;
 
     //Constructors
-    public Account(String id, float balance) {
+    public Account(String id, float balance, String type) {
         this._id = id;
         this.Balance = balance;
+        this.Type = type;
     }
 
 
@@ -51,7 +52,6 @@ public class Account implements Serializable {
         this.Currency = Currency;
         this.Status = Status;
         this.DateOfCreation = DateOfCreation;
-        //setAccountNumber();
     }
 
     // Getter Methods
