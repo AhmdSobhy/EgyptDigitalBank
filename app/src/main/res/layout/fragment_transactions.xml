@@ -102,15 +102,16 @@
             android:background="@color/transparent"/>
 
     </LinearLayout>
+
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="437dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/transaction_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
 
     </ScrollView>
 

@@ -59,10 +59,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         accountTypes = new ArrayAdapter<String>(this, R.layout.list_item, items);
         accountType.setAdapter(accountTypes);
 
-
-
-
-
         createAccBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override

@@ -51,7 +51,7 @@ public class Account implements Serializable {
         this.Currency = Currency;
         this.Status = Status;
         this.DateOfCreation = DateOfCreation;
-        setAccountNumber();
+        //setAccountNumber();
     }
 
     // Getter Methods
@@ -116,6 +116,6 @@ public class Account implements Serializable {
     }
 
     public void setAccountNumber() {
-        this.accountNumber = get_id().replaceAll("[^0-9]","");
+       this.accountNumber = get_id().replaceAll("[^0-9]","");
     }
 }

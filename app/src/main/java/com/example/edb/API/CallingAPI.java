@@ -106,6 +106,7 @@ public class CallingAPI {
     }
 
     public void addTransaction(String userSSN, String accountID, Transaction transactionToAdd){
+        System.out.println(transactionToAdd.getDescription());
         retrofit = new Retrofit.Builder().baseUrl(cloudDbUrl).addConverterFactory(GsonConverterFactory.create()).build();
         apiInterface = retrofit.create(ApiInterface.class);
         System.out.println("Add transaction is heeeeeeeeeeeeeeeeeeere");

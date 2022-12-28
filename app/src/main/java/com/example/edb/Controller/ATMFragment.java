@@ -160,12 +160,12 @@ public class ATMFragment extends Fragment {
                 public void run() {
                     callingAPI.addTransaction(user.getSSN(),accountId,transactionToSend);
                 }
-            }, 5000);
+            },3000 );
             handler.postDelayed(new Runnable() {
                 public void run() {
                     UserMapping.user=callingAPI.login(user.getEmail(),user.getPassword());
                 }
-            }, 2000);
+            }, 10000);
         }
         catch(Exception e) {
             System.out.println("problem with creating call (getUserAccountId)");

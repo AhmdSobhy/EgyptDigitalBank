@@ -104,7 +104,8 @@ public class TransferActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/d HH:mm:ss");
                 Date date = new Date();
 
-                Transaction transaction= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "Transfer to account no: "+receiverAccNum,(formatter.format(date)));
+                Transaction transaction= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "Transfer to account no: "+receiverAccNum.getText().toString(),(formatter.format(date)));
+                Transaction transaction2= new Transaction("Transfer",Float.parseFloat(amount.getText().toString()), "from "+senderAccountID,(formatter.format(date)));
 
 
 
@@ -121,9 +122,9 @@ public class TransferActivity extends AppCompatActivity {
                                     final Handler handler = new Handler(Looper.getMainLooper());
                                     handler.postDelayed(new Runnable() {
                                         public void run() {
-                                            addTransaction(Receiver.getSSN(),RecevierID,transaction);
+                                            addTransaction(sender.getSSN(),senderAccountID,transaction);
                                         }
-                                    },1000);
+                                    },10000);
 
                                     newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
                                     dbTransfer.updateBalance(Receiver.getSSN(),Receiver.getAccounts().get(j).get_id(),String.valueOf(newBalanceR));
@@ -137,24 +138,28 @@ public class TransferActivity extends AppCompatActivity {
                                                 sender.getAccounts().get(i).setBalance(newBalanceS);
                                                 dbTransfer.updateBalance(sender.getSSN(), sender.getAccounts().get(i).get_id(),String.valueOf(newBalanceS) );
 
-                                                handler.postDelayed(new Runnable() {
-                                                    public void run() {
-                                                        transaction.setDescription("transaction from "+sender.getFullName());
-                                                        addTransaction(Receiver.getSSN(),RecevierID,transaction);
 
-                                                        Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
-                                                        Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
+                                               // transaction.setDescription("transaction from "+sender.getFullName());
+                                                addTransaction(Receiver.getSSN(),RecevierID,transaction2);
 
-                                                        ReOpenContext.putExtra("user", sender);
-                                                        startActivity(ReOpenContext);
-                                                    }
-                                                },1000);
+                                                Toast.makeText(getApplicationContext(), "Transfer Complete", Toast.LENGTH_LONG).show();
+                                                Intent ReOpenContext = new Intent(TransferActivity.this, TransferActivity.class);
+
+                                                ReOpenContext.putExtra("user", sender);
+                                                startActivity(ReOpenContext);
 
                                                 break;
                                             }
                                         }
                                     }
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            UserMapping.user = dbTransfer.login(sender.getEmail(),sender.getPassword());
+                                        }
+                                    },3000);
                                     break;
+
                                 }
                                 else {
                                     Toast.makeText(getApplicationContext(),"Error in updating receivers data",Toast.LENGTH_LONG);
