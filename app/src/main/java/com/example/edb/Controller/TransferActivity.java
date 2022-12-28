@@ -124,7 +124,7 @@ public class TransferActivity extends AppCompatActivity {
                                         public void run() {
                                             addTransaction(sender.getSSN(),senderAccountID,transaction);
                                         }
-                                    },10000);
+                                    },3000);
 
                                     newBalanceR = Receiver.getAccounts().get(j).getBalance() + Float.parseFloat(amount.getText().toString());
                                     dbTransfer.updateBalance(Receiver.getSSN(),Receiver.getAccounts().get(j).get_id(),String.valueOf(newBalanceR));
@@ -157,7 +157,7 @@ public class TransferActivity extends AppCompatActivity {
                                         public void run() {
                                             UserMapping.user = dbTransfer.login(sender.getEmail(),sender.getPassword());
                                         }
-                                    },3000);
+                                    },10000);
                                     break;
 
                                 }
